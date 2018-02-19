@@ -4,11 +4,16 @@
  * and open the template in the editor.
  */
 package Clases;
+import com.google.gson.Gson;
 
 /**
  *
  * @author jhon_quiceno
  */
 public class Serializador {
+    
+public void serializar(String json , Object clase){
+
+}
     
 }
