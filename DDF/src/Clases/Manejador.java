@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
+import java.util.HashSet;
 
 /**
  *
@@ -15,8 +16,11 @@ import com.google.gson.JsonSyntaxException;
  */
 public class Manejador {
  private Info _info;
- Serializador _ser;
+ private Dibujador _paint;
  
+ public Manejador(){
+    _paint = new Dibujador();
+}
  public void Cargar(String jsonString)
  {   
       try{
@@ -46,8 +50,13 @@ public class Manejador {
       String jsonEjemplo = gson.toJson(_info);
  }
  
- 
-    
+    public void Apintar(){
+       for(Dependencias dep :_info.getDependencias()){
+           dep.GenerarFigura();
+           _paint.setShape(dep.implicado.getShape());
+       }  
+       
+    }
     
 }
 
