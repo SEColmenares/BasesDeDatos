@@ -5,6 +5,14 @@
  */
 package Clases;
 
+import java.io.File;
+import java.io.IOException;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.io.FileReader;
+import java.io.BufferedReader;
 /**
  *
  * @author jhon_quiceno
@@ -63,7 +71,47 @@ public class interfaz extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
+   
+        FileReader f=null ;
+        BufferedReader b =null;
+    try
+   {
+   JFileChooser fileChooser = new JFileChooser();
+//   FileNameExtensionFilter filter = new FileNameExtensionFilter("csv");
+//   fileChooser.setFileFilter(filter);
+     String cadena;
+     String Json="";
+     int result = fileChooser.showOpenDialog(this);
+     if (result == JFileChooser.APPROVE_OPTION) {
+     File fichero = fileChooser.getSelectedFile();
+      f = new FileReader(fichero);
+      b = new BufferedReader(f);
+      while((cadena = b.readLine())!=null) {
+          Json+=cadena;
+      }   
+//      _manejo.Exportar();
+      _manejo.Cargar(Json);
+   }
+   }
+    catch(Exception e){
+       JOptionPane.showMessageDialog(null, e);
+     }
+        finally {
+
+			try {
+
+				if (b != null)
+					b.close();
+
+				if (f != null)
+					f.close();
+
+			} catch (IOException ex) {
+
+				ex.printStackTrace();
+
+		}
+          }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

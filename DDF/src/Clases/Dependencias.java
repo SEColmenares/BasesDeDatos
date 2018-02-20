@@ -4,7 +4,9 @@
  * and open the template in the editor.
  */
 package Clases;
-
+import java.awt.Shape;
+import java.awt.Color;
+import java.awt.Point;
 /**
  *
  * @author jhon_quiceno
@@ -14,7 +16,7 @@ public class Dependencias {
     char[] _implicantes;
     char[] _implicados;
     boolean _EsTrivial;
-    int[] _posicion;
+    int[] _posicion={0,0};
     
     public Dependencias(char[] implicantes , char[] implicados, boolean EStrivial)
     {
@@ -36,3 +38,31 @@ public class Dependencias {
     public int[] getPosicion(){ return _posicion;}
        
 }
+
+ class FiguraAtributo {
+        private Shape _figura;
+        private Color _color;
+        private String _Label;
+        private Point _posicion;
+
+        public FiguraAtributo(char[]dato,int[] posicion) {
+            super();         
+          _posicion = new Point(posicion[0], posicion[1]);         
+        }
+             
+        public Shape getShape() {
+            return _figura;
+        }
+
+        public void setShape(Shape shape) {
+            this._figura = shape;
+        }
+
+        public Color getColor() {
+            return _color;
+        }
+
+        public void setColor(Color color) {
+            this._color = color;
+        }
+    }

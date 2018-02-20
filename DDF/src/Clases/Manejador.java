@@ -6,6 +6,7 @@
 package Clases;
 import java.util.ArrayList;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 
 /**
@@ -16,9 +17,8 @@ public class Manejador {
  private Info _info;
  Serializador _ser;
  
- public void Cargar()
- {
-     String jsonString="";
+ public void Cargar(String jsonString)
+ {   
       try{
             Gson gson = new Gson();                
             _info  = gson.fromJson(jsonString, Info.class);                
@@ -26,30 +26,55 @@ public class Manejador {
             System.err.println("JsonSyntaxException: " + e.getMessage());
         }   
  } 
+ 
+ public void Exportar()
+ {
+     char[] at ={'A','B','C','D','E','F',};
+     Atributos att = new Atributos(at);
+     char[] unoo ={'A'};
+     char[] unos ={'B','C'};
+     Dependencias uno = new Dependencias(unoo,unos, false);
+     Dependencias dos = new Dependencias(unoo,unos, false);
+     Dependencias tres = new Dependencias(unoo,unos, false);
+     ArrayList<Dependencias> dep = new ArrayList<>();
+     dep.add(uno);
+     dep.add(dos);
+     dep.add(tres);
+     _info = new Info(att, dep);
+      Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+      String jsonEjemplo = gson.toJson(_info);
+ }
+ 
+ 
     
     
 }
 
 
   class Info {
-  private ArrayList<Atributos> Atributos;
-  private ArrayList<Dependencias> Dependencias;
+  private Atributos atributos;
+  private ArrayList<Dependencias> dependencias;
   
-  public Info(){};
+  public Info(Atributos atri,ArrayList<Dependencias> dep )
+  {
+   atributos = atri;
+   dependencias = dep;
+  };
   
-  public ArrayList<Atributos> getAtributos() {
-    return Atributos;
+  public Atributos getAtributos() {
+    return atributos;
   }
 
-  public void setAtributos(ArrayList<Atributos> name) {
-    this.Atributos = Atributos;
+  public void setAtributos(Atributos atri) {
+    this.atributos = atri;
   }
  
   public ArrayList<Dependencias> getDependencias() {
-    return Dependencias;
+    return dependencias;
   }
  
   public void setDependencias(ArrayList<Dependencias> age) {
-    this.Dependencias = Dependencias;
+    this.dependencias = dependencias;
   }
 }
