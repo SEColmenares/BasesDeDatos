@@ -13,6 +13,7 @@ import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.FileReader;
 import java.io.BufferedReader;
+import java.awt.Container;
 /**
  *
  * @author jhon_quiceno
@@ -129,7 +130,12 @@ public class interfaz extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-            // TODO add your handling code here:          
+            // TODO add your handling code here:     
+          Container cp = getContentPane();
+          cp.add(_manejo.getPaint());
+             setDefaultCloseOperation(EXIT_ON_CLOSE);
+           pack();
+           repaint();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**

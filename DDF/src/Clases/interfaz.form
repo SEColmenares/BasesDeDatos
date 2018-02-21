@@ -59,7 +59,6 @@
     </Component>
     <Component class="javax.swing.JButton" name="jButton2">
       <Properties>
-        <Property name="actionCommand" type="java.lang.String" value=""/>
         <Property name="label" type="java.lang.String" value="pintar"/>
       </Properties>
       <Events>

@@ -35,7 +35,8 @@ public class Dibujador extends JPanel{
    super.paintComponent(g);
    g2 = (Graphics2D) g.create();
     for (Shape item : _figuras) {
-          g2.draw(item);
+          g2.setColor(Color.BLACK);
+          g2.draw(item);      
       }
  }
   @Override
@@ -52,7 +53,10 @@ public class Dibujador extends JPanel{
         }
    
    public void AgregarFigura(Shape fig){
-      _figuras.add(fig);
+      _figuras.add(fig);     
+   }
+    public void AgregarRangoFigura(List<Shape> fig){
+      _figuras.addAll(fig);     
    }
  
    public List<Shape> getShape() {

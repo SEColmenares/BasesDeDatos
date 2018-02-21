@@ -21,6 +21,10 @@ public class Manejador {
  public Manejador(){
     _paint = new Dibujador();
 }
+ 
+ public Dibujador getPaint(){
+     return _paint;
+ }
  public void Cargar(String jsonString)
  {   
       try{
@@ -30,6 +34,7 @@ public class Manejador {
             System.err.println("JsonSyntaxException: " + e.getMessage());
         }   
  } 
+ 
  
  public void Exportar()
  {
@@ -53,7 +58,8 @@ public class Manejador {
     public void Apintar(){
        for(Dependencias dep :_info.getDependencias()){
            dep.GenerarFigura();
-           _paint.setShape(dep.implicado.getShape());
+           _paint.AgregarRangoFigura(dep.implicado.getShape());
+           _paint.AgregarRangoFigura(dep.implicante.getShape());
        }  
        
     }

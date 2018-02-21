@@ -22,7 +22,7 @@ public class Dependencias {
     char[] _implicantes;
     char[] _implicados;
     boolean _EsTrivial;
-    int[] _posicion={0,0};
+    int[] _posicion={0,0,0,0};
     public FiguraAtributo implicado;
     public FiguraAtributo implicante;
     
@@ -31,13 +31,13 @@ public class Dependencias {
         _implicantes=implicantes;
         _implicados=implicados;
         _EsTrivial=EStrivial;
-        implicado = new FiguraAtributo(implicados,_posicion);
-        implicante = new FiguraAtributo(implicantes,_posicion);
+        implicado = new FiguraAtributo(implicados,_posicion[2],_posicion[3]);
+        implicante = new FiguraAtributo(implicantes,_posicion[0],_posicion[1]);
     }
     
     public void GenerarFigura(){
-        implicado = new FiguraAtributo(_implicados,_posicion);
-        implicante = new FiguraAtributo(_implicantes,_posicion);
+        implicado = new FiguraAtributo(_implicados,_posicion[2],_posicion[3]);
+        implicante = new FiguraAtributo(_implicantes,_posicion[0],_posicion[1]);
     }
     
     public void setImplicantes(char[] implicantes){ _implicantes=implicantes;}
@@ -61,10 +61,10 @@ public class Dependencias {
         private Point _posicion;
         private char[] _dato;
         
-        public FiguraAtributo(char[]dato,int[] posicion) {
+        public FiguraAtributo(char[]dato,int x, int y) {
             super();         
           _dato=dato;
-          _posicion = new Point(posicion[0], posicion[1]);  
+          _posicion = new Point(x, y);  
           for(int i =0;i < dato.length;i++)_label+=dato[i];
           _fig=CrearShape(dato);
         }
@@ -88,9 +88,10 @@ public class Dependencias {
             
             _fig = new ArrayList<Shape>();
             for(int i =0;i<dato.length;i++){
-                _fig.add(new Rectangle2D.Double(_posicion.x+i*2, _posicion.y, 50, 50));
+                _posicion.x+=5;
+                _fig.add(new Rectangle2D.Double(_posicion.x+i*30, _posicion.y, 30, 20));
             }
-            if(_fig.size()>1)_fig.add(new Rectangle2D.Double(_posicion.x-2, _posicion.y, 70, 70));
+            if(_fig.size()>1)_fig.add(new Rectangle2D.Double(_posicion.x-(5*_fig.size()), _posicion.y-5, 40*_fig.size(), 30));
             return _fig;
         }
     }

@@ -20,39 +20,42 @@
       ],
       "_EsTrivial": false,
       "_posicion": [
-        0,
-        0,
-        0
+       100,
+       100,
+       200,
+       100
       ]
     },
     {
       "_implicantes": [
-        "A"
+        "B"
       ],
       "_implicados": [
-        "B",
-        "C"
+        "E"
       ],
       "_EsTrivial": false,
       "_posicion": [
-        0,
-        0,
-        0
+        100,
+        150,
+        200,
+        150
       ]
     },
     {
       "_implicantes": [
-        "A"
+        "C",
+        "D"
       ],
       "_implicados": [
-        "B",
-        "C"
+        "E",
+        "F"
       ],
       "_EsTrivial": false,
       "_posicion": [
-        0,
-        0,
-        0
+        100,
+        200,
+        200,
+        200
       ]
     }
   ]
