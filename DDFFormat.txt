@@ -1,0 +1,59 @@
+{
+  "atributos": {
+    "_atributo": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F"
+    ]
+  },
+  "dependencias": [
+    {
+      "_implicantes": [
+        "A"
+      ],
+      "_implicados": [
+        "B",
+        "C"
+      ],
+      "_EsTrivial": false,
+      "_posicion": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "_implicantes": [
+        "A"
+      ],
+      "_implicados": [
+        "B",
+        "C"
+      ],
+      "_EsTrivial": false,
+      "_posicion": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "_implicantes": [
+        "A"
+      ],
+      "_implicados": [
+        "B",
+        "C"
+      ],
+      "_EsTrivial": false,
+      "_posicion": [
+        0,
+        0,
+        0
+      ]
+    }
+  ]
+}
