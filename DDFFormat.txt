@@ -1,61 +1,104 @@
 {
-  "atributos": {
-    "_atributo": [
-      "A",
-      "B",
-      "C",
-      "D",
-      "E",
-      "F"
-    ]
-  },
+  "atributos": [
+    {
+      "nombre": "Avion",
+      "etiqueta": "A"
+    },
+    {
+      "nombre": "Bebe",
+      "etiqueta": "B"
+    },
+    {
+      "nombre": "Casa",
+      "etiqueta": "C"
+    },
+    {
+      "nombre": "Dedo",
+      "etiqueta": "D"
+    },
+    {
+      "nombre": "Etiqueta",
+      "etiqueta": "E"
+    },
+    {
+      "nombre": "Fabula",
+      "etiqueta": "F"
+    }
+  ],
   "dependencias": [
     {
       "_implicantes": [
-        "A"
+        {
+          "nombre": "Avion",
+          "etiqueta": "A"
+        }
       ],
       "_implicados": [
-        "B",
-        "C"
+        {
+          "nombre": "Bebe",
+          "etiqueta": "B"
+        },
+        {
+          "nombre": "Casa",
+          "etiqueta": "C"
+        }
       ],
       "_EsTrivial": false,
       "_posicion": [
-       100,
-       100,
-       200,
-       100
+        0,
+        0,
+        0,
+        0
       ]
     },
     {
       "_implicantes": [
-        "B"
+        {
+          "nombre": "Avion",
+          "etiqueta": "A"
+        }
       ],
       "_implicados": [
-        "E"
+        {
+          "nombre": "Bebe",
+          "etiqueta": "B"
+        },
+        {
+          "nombre": "Casa",
+          "etiqueta": "C"
+        }
       ],
       "_EsTrivial": false,
       "_posicion": [
-        100,
-        150,
-        200,
-        150
+        0,
+        0,
+        0,
+        0
       ]
     },
     {
       "_implicantes": [
-        "C",
-        "D"
+        {
+          "nombre": "Avion",
+          "etiqueta": "A"
+        }
       ],
       "_implicados": [
-        "E",
-        "F"
+        {
+          "nombre": "Bebe",
+          "etiqueta": "B"
+        },
+        {
+          "nombre": "Casa",
+          "etiqueta": "C"
+        }
       ],
       "_EsTrivial": false,
       "_posicion": [
-        100,
-        200,
-        200,
-        200
+        0,
+        0,
+        0,
+        0
       ]
     }
   ]

@@ -14,6 +14,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.FileReader;
 import java.io.BufferedReader;
 import java.awt.Container;
+import java.util.List;
 /**
  *
  * @author jhon_quiceno
@@ -24,9 +25,14 @@ public class interfaz extends javax.swing.JFrame {
      * Creates new form interfaz
      */
     Manejador _manejo;
+    Container _cp ;
     public interfaz() {
         initComponents();
         _manejo = new Manejador();
+        _cp = getContentPane();
+        _cp.add(_manejo.getPaint());
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        
     }
 
     /**
@@ -40,6 +46,9 @@ public class interfaz extends javax.swing.JFrame {
 
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -50,11 +59,19 @@ public class interfaz extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setActionCommand("");
         jButton2.setLabel("pintar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("Ingresar Dependencia:");
+
+        jButton3.setText("Leer");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
             }
         });
 
@@ -64,10 +81,18 @@ public class interfaz extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton2)
-                .addContainerGap(322, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton2))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton3)))
+                .addContainerGap(47, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -76,10 +101,18 @@ public class interfaz extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2))
-                .addContainerGap(298, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 264, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton3))
+                .addContainerGap())
         );
 
         jButton1.getAccessibleContext().setAccessibleName("jbton_cargar");
+        jLabel1.getAccessibleContext().setAccessibleName("labelNombre");
+        jTextField1.getAccessibleContext().setAccessibleName("textBoxIngresarDependencia");
+        jButton3.getAccessibleContext().setAccessibleName("botonLeerDependencia");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -131,12 +164,21 @@ public class interfaz extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
             // TODO add your handling code here:     
-          Container cp = getContentPane();
-          cp.add(_manejo.getPaint());
-             setDefaultCloseOperation(EXIT_ON_CLOSE);
            pack();
            repaint();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        // se van a separar las dependencias por ;, se utiliza la flecha -> como "implicador"
+        String texto = jTextField1.getText();
+        LectorDependecias lector = new  LectorDependecias();
+        List<Dependencias> dependencias = lector.LeerDependencias(texto);
+        
+        _manejo.CargarDependencias(dependencias);
+        _manejo.Apintar();
+        repaint();
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -176,5 +218,8 @@ public class interfaz extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }

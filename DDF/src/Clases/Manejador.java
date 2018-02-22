@@ -8,7 +8,9 @@ import java.util.ArrayList;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
+import com.sun.javafx.scene.control.skin.VirtualFlow;
 import java.util.HashSet;
+import java.util.List;
 
 /**
  *
@@ -38,10 +40,18 @@ public class Manejador {
  
  public void Exportar()
  {
-     char[] at ={'A','B','C','D','E','F',};
-     Atributos att = new Atributos(at);
-     char[] unoo ={'A'};
-     char[] unos ={'B','C'};
+     List<Atributo> atributos = new ArrayList<Atributo>();
+     atributos.add( new Atributo("Avion", "A"));
+     atributos.add( new Atributo("Bebe", "B"));
+     atributos.add( new Atributo("Casa", "C"));
+     atributos.add( new Atributo("Dedo", "D"));
+     atributos.add( new Atributo("Etiqueta", "E"));
+     atributos.add( new Atributo("Fabula", "F"));
+     List<Atributo> unoo =new ArrayList<Atributo>();
+     unoo.add( new Atributo("Avion", "A"));
+     List<Atributo> unos =new ArrayList<Atributo>();
+     unos.add( new Atributo("Bebe", "B"));
+     unos.add( new Atributo("Casa", "C"));
      Dependencias uno = new Dependencias(unoo,unos, false);
      Dependencias dos = new Dependencias(unoo,unos, false);
      Dependencias tres = new Dependencias(unoo,unos, false);
@@ -49,7 +59,7 @@ public class Manejador {
      dep.add(uno);
      dep.add(dos);
      dep.add(tres);
-     _info = new Info(att, dep);
+     _info = new Info(atributos, dep);
       Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
       String jsonEjemplo = gson.toJson(_info);
@@ -58,30 +68,40 @@ public class Manejador {
     public void Apintar(){
        for(Dependencias dep :_info.getDependencias()){
            dep.GenerarFigura();
-           _paint.AgregarRangoFigura(dep.implicado.getShape());
-           _paint.AgregarRangoFigura(dep.implicante.getShape());
+           _paint.AgregarRangoFigura(dep.getFigCado().getShape());
+           _paint.AgregarRangoFigura(dep.getFigCante().getShape());
        }  
        
+    }
+
+    void CargarDependencias(List<Dependencias> dependencias) {
+        
+        _info = new Info((ArrayList<Dependencias>) dependencias);
     }
     
 }
 
 
   class Info {
-  private Atributos atributos;
+  private List<Atributo> atributos;
   private ArrayList<Dependencias> dependencias;
   
-  public Info(Atributos atri,ArrayList<Dependencias> dep )
+  public Info(List<Atributo> atri,ArrayList<Dependencias> dep )
   {
    atributos = atri;
    dependencias = dep;
   };
   
-  public Atributos getAtributos() {
+  public Info(ArrayList<Dependencias> dep )
+  {
+      dependencias = dep;
+  };
+  
+  public List<Atributo> getAtributos() {
     return atributos;
   }
 
-  public void setAtributos(Atributos atri) {
+  public void setAtributos(List<Atributo> atri) {
     this.atributos = atri;
   }
  
