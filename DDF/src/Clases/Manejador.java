@@ -23,6 +23,7 @@ import java.util.Set;
 public class Manejador {
  private Info _info;
  private Dibujador _paint;
+ private int off=50;
  
  public Manejador(){
      
@@ -71,7 +72,7 @@ public class Manejador {
  }
  
     public void Apintar(){
-        int off=50;
+          
        for(Dependencias dep :_info.getDependencias()){
            dep.GenerarFigura();
            Point IniCante = new Point(dep.getPosicion()[0],dep.getPosicion()[1]);
