@@ -9,6 +9,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 import com.sun.javafx.scene.control.skin.VirtualFlow;
+import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.util.HashSet;
 import java.util.List;
 
@@ -20,8 +22,9 @@ public class Manejador {
  private Info _info;
  private Dibujador _paint;
  
- public Manejador(){
-    _paint = new Dibujador();
+ public Manejador(Rectangle marco, Graphics g  ){
+     
+    _paint = new Dibujador(marco,g);
 }
  
  public Dibujador getPaint(){
@@ -70,6 +73,7 @@ public class Manejador {
            dep.GenerarFigura();
            _paint.AgregarRangoFigura(dep.getFigCado().getShape());
            _paint.AgregarRangoFigura(dep.getFigCante().getShape());
+           
        }  
        
     }
