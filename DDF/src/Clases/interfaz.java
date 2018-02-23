@@ -28,7 +28,8 @@ public class interfaz extends javax.swing.JFrame {
     Container _cp ;
     public interfaz() {
         initComponents();     
-        _manejo = new Manejador(this.getBounds(),this.getGraphics());      
+        _manejo = new Manejador();
+        _manejo.setMarco(getContentPane().getBounds());
     }
 
     /**
@@ -91,14 +92,13 @@ public class interfaz extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2)
                     .addComponent(jLabel1)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton3))
-                .addContainerGap(298, Short.MAX_VALUE))
+                .addGap(0, 309, Short.MAX_VALUE))
         );
 
         jButton1.getAccessibleContext().setAccessibleName("jbton_cargar");

@@ -55,17 +55,17 @@
       "_implicantes": [
         {
           "nombre": "Avion",
-          "etiqueta": "A"
+          "etiqueta": "E"
+        },
+        {
+          "nombre": "Avion",
+          "etiqueta": "F"
         }
       ],
       "_implicados": [
         {
           "nombre": "Bebe",
-          "etiqueta": "B"
-        },
-        {
-          "nombre": "Casa",
-          "etiqueta": "C"
+          "etiqueta": "D"
         }
       ],
       "_EsTrivial": false,
@@ -80,16 +80,37 @@
       "_implicantes": [
         {
           "nombre": "Avion",
-          "etiqueta": "A"
+          "etiqueta": "D"
+        },
+        {
+          "nombre": "Avion",
+          "etiqueta": "E"
         }
       ],
       "_implicados": [
         {
           "nombre": "Bebe",
-          "etiqueta": "B"
-        },
+          "etiqueta": "A"
+        }
+      ],
+      "_EsTrivial": false,
+      "_posicion": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "_implicantes": [
         {
-          "nombre": "Casa",
+          "nombre": "Avion",
+          "etiqueta": "B"
+        }
+      ],
+      "_implicados": [
+        {
+          "nombre": "Bebe",
           "etiqueta": "C"
         }
       ],

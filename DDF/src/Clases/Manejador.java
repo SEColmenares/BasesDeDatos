@@ -13,6 +13,8 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.util.HashSet;
 import java.util.List;
+import java.awt.Point;
+import java.util.Set;
 
 /**
  *
@@ -22,9 +24,9 @@ public class Manejador {
  private Info _info;
  private Dibujador _paint;
  
- public Manejador(Rectangle marco, Graphics g  ){
+ public Manejador(){
      
-    _paint = new Dibujador(marco,g);
+    _paint = new Dibujador();
 }
  
  public Dibujador getPaint(){
@@ -69,12 +71,53 @@ public class Manejador {
  }
  
     public void Apintar(){
+        int off=50;
        for(Dependencias dep :_info.getDependencias()){
            dep.GenerarFigura();
-           _paint.AgregarRangoFigura(dep.getFigCado().getShape());
-           _paint.AgregarRangoFigura(dep.getFigCante().getShape());
+           Point IniCante = new Point(dep.getPosicion()[0],dep.getPosicion()[1]);
+           Point IniCado = new Point(dep.getPosicion()[2],dep.getPosicion()[3]);                  
+           if(!_paint.content(IniCante))IniCante=_paint.UltimaPosicion();
+           if(!_paint.content(IniCado)){
+               IniCado.x=IniCante.x+200;
+               IniCado.y=IniCante.y+off;
+               IniCante.y+=off;
+           }
+           off+=50;
+           dep.setPosicion(new int[]{IniCante.x,IniCante.y,IniCado.x,IniCado.y});                  
+           for(String et : dep.getFigCante().getEtiquetas().keySet()){                         
+           if(_paint.ContienAtributo(et)){   
+             if(dep.getFigCante().getEtiquetas().keySet().size()==1){
+                 Point pt = _paint.getPuntoEtiqueta(et);
+                 dep.setPosicionImplicante(new Point(pt.x-20,pt.y-15));
+             }
+             else{
+                _paint.AgregarFlechaAetiqueta(new Point[]{dep.getFigCante().getEtiquetas().get(et),_paint.getPuntoEtiqueta(et)});
+             }
+           }
+           else{
+            _paint.AgregarEtiqueta(et, dep.getFigCante().getEtiquetas().get(et)); 
+           } 
+           }
+           for(String et : dep.getFigCado().getEtiquetas().keySet()){ 
+             if(_paint.ContienAtributo(et)){   
+             if(dep.getFigCado().getEtiquetas().keySet().size()==1){
+                 Point pt = _paint.getPuntoEtiqueta(et);
+                 dep.setPosicionImplicado(new Point(pt.x-20,pt.y-15));
+             }
+             else{
+                _paint.AgregarFlechaAetiqueta(new Point[]{dep.getFigCado().getEtiquetas().get(et),_paint.getPuntoEtiqueta(et)});
+             }
+           }
+           else{
+            _paint.AgregarEtiqueta(et, dep.getFigCado().getEtiquetas().get(et)); 
+           } 
+             
+       }
+           _paint.AgregarTemp(dep.getFigCado().getShape());
+           _paint.AgregarTemp(dep.getFigCante().getShape());
+           _paint.AgregarFlecha(dep.getFlecha()); 
            
-       }  
+       }
        
     }
 
@@ -82,6 +125,10 @@ public class Manejador {
         
         _info = new Info((ArrayList<Dependencias>) dependencias);
     }
+     public void setMarco(Rectangle marco)
+  {
+   _paint.setMarco(new Rectangle(marco.x+50,marco.y+50,marco.width-50,marco.height-50));
+  }
     
 }
 
