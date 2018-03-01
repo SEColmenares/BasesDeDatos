@@ -31,13 +31,13 @@
         {
           "nombre": "Avion",
           "etiqueta": "A"
+        },
+        {
+          "nombre": "Avion",
+          "etiqueta": "B"
         }
       ],
       "_implicados": [
-        {
-          "nombre": "Bebe",
-          "etiqueta": "B"
-        },
         {
           "nombre": "Casa",
           "etiqueta": "C"
@@ -55,17 +55,13 @@
       "_implicantes": [
         {
           "nombre": "Avion",
-          "etiqueta": "E"
-        },
-        {
-          "nombre": "Avion",
-          "etiqueta": "F"
+          "etiqueta": "D"
         }
       ],
       "_implicados": [
         {
           "nombre": "Bebe",
-          "etiqueta": "D"
+          "etiqueta": "E"
         }
       ],
       "_EsTrivial": false,
@@ -80,16 +76,12 @@
       "_implicantes": [
         {
           "nombre": "Avion",
-          "etiqueta": "D"
-        },
-        {
-          "nombre": "Avion",
-          "etiqueta": "E"
+          "etiqueta": "C"
         }
       ],
       "_implicados": [
         {
-          "nombre": "Bebe",
+          "nombre": "Casa",
           "etiqueta": "A"
         }
       ],
@@ -106,12 +98,128 @@
         {
           "nombre": "Avion",
           "etiqueta": "B"
+        },
+        {
+          "nombre": "Avion",
+          "etiqueta": "E"
         }
       ],
       "_implicados": [
         {
-          "nombre": "Bebe",
+          "nombre": "Casa",
           "etiqueta": "C"
+        }
+      ],
+      "_EsTrivial": false,
+      "_posicion": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "_implicantes": [
+        {
+          "nombre": "Avion",
+          "etiqueta": "B"
+        },
+        {
+          "nombre": "Avion",
+          "etiqueta": "C"
+        }
+      ],
+      "_implicados": [
+        {
+          "nombre": "Casa",
+          "etiqueta": "D"
+        }
+      ],
+      "_EsTrivial": false,
+      "_posicion": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "_implicantes": [
+        {
+          "nombre": "Avion",
+          "etiqueta": "C"
+        },
+        {
+          "nombre": "Avion",
+          "etiqueta": "F"
+        }
+      ],
+      "_implicados": [
+        {
+          "nombre": "Casa",
+          "etiqueta": "B"
+        },
+        {
+          "nombre": "Casa",
+          "etiqueta": "D"
+        }
+      ],
+      "_EsTrivial": false,
+      "_posicion": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "_implicantes": [
+        {
+          "nombre": "Avion",
+          "etiqueta": "A"
+        },
+        {
+          "nombre": "Avion",
+          "etiqueta": "C"
+        },
+        {
+          "nombre": "Avion",
+          "etiqueta": "D"
+        }
+      ],
+      "_implicados": [
+        {
+          "nombre": "Casa",
+          "etiqueta": "B"
+        }
+      ],
+      "_EsTrivial": false,
+      "_posicion": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "_implicantes": [
+        {
+          "nombre": "Avion",
+          "etiqueta": "C"
+        },
+        {
+          "nombre": "Avion",
+          "etiqueta": "E"
+        }
+      ],
+      "_implicados": [
+        {
+          "nombre": "Casa",
+          "etiqueta": "A"
+        },
+        {
+          "nombre": "Casa",
+          "etiqueta": "F"
         }
       ],
       "_EsTrivial": false,

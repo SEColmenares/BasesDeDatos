@@ -24,10 +24,12 @@ public class Manejador {
  private Info _info;
  private Dibujador _paint;
  private int off=50;
+ private Operador _operador;
  
  public Manejador(){
      
     _paint = new Dibujador();
+    _operador = new Operador();
 }
  
  public Dibujador getPaint(){
@@ -130,6 +132,16 @@ public class Manejador {
   {
    _paint.setMarco(new Rectangle(marco.x+50,marco.y+50,marco.width-50,marco.height-50));
   }
+     public void recubrimiento(){
+     _operador.setAtributos(_info.getAtributos());
+     _operador.setDependencias(_info.getDependencias());
+     List<Dependencias> dp =_operador.CalcularRecubrimiento(); 
+     _paint.ClearAll();
+     _info.ClearDep();
+     _info.addDep(dp);
+     off=50;
+     Apintar();
+   }
     
 }
 
@@ -156,12 +168,16 @@ public class Manejador {
   public void setAtributos(List<Atributo> atri) {
     this.atributos = atri;
   }
- 
+   
+  public void ClearDep()
+  {
+     dependencias.clear();
+  }
   public ArrayList<Dependencias> getDependencias() {
     return dependencias;
   }
  
-  public void setDependencias(ArrayList<Dependencias> age) {
-    this.dependencias = dependencias;
+  public void addDep(List<Dependencias> age) {
+    dependencias.addAll(age);
   }
 }

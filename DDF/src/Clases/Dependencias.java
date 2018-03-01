@@ -22,6 +22,8 @@ public class Dependencias {
     private FiguraConjunto implicado;
     private FiguraConjunto implicante;
     private Point[] _vector;
+    private String _etqImplicados="";
+    private String _etqImplicante="";
     
     
     // sobrecarga con la clase atributo
@@ -34,9 +36,13 @@ public class Dependencias {
     }
     
     public void GenerarFigura(){
+        _etqImplicados="";
+        _etqImplicante="";
         implicado = new FiguraConjunto(_implicados,_posicion[2],_posicion[3]);
         implicante = new FiguraConjunto(_implicantes,_posicion[0],_posicion[1]);
         GenerarFlecha();
+        _implicantes.forEach(item->_etqImplicante+=item.getEtiqueta());
+        _implicados.forEach(item->_etqImplicados+=item.getEtiqueta());
     }
     private void GenerarFlecha(){
         Rectangle2D inicio = implicante.getShape().get(implicante.getShape().size()-1).getBounds2D();
@@ -84,6 +90,25 @@ public class Dependencias {
     }
     public Point[] getFlecha(){
         return _vector;
+    }
+        public void DltCante(String et){
+       Atributo aborrar=null;
+       _etqImplicante="";
+       for(Atributo at: _implicantes){
+           if(at.getEtiqueta().equals(et))
+           {
+               aborrar=at;
+               continue;
+           }
+           _etqImplicante+=at.getEtiqueta();         
+       }
+       if(aborrar!=null)_implicantes.remove(aborrar);
+    }
+    public String getEtCado(){
+     return _etqImplicados;   
+    }
+    public String getEtCante(){
+     return _etqImplicante;   
     }
     public int[] getPosicion(){ return _posicion;}
        

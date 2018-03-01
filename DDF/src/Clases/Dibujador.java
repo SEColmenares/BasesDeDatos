@@ -125,6 +125,13 @@ private void drawArrowLine(Graphics2D g, Point ini, Point fin) {
    public void AgregarTemp(List<Shape> fle){
       _tem.addAll(fle);     
    }
+   public void ClearAll(){
+      _figuras.clear();
+      _tem.clear();
+      _flechas.clear();
+      _flechasAetiqueta.clear();
+      _etiqueta.clear();
+   }
    public Point UltimaPosicion(){    
       if(_figuras.size()!=0)return _tem.get(_figuras.size()-1).getBounds().getLocation();
       else return new Point(50,30);
