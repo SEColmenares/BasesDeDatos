@@ -5,8 +5,11 @@
  */
 package Clases;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 
 /**
@@ -75,24 +78,32 @@ public class Operador {
     return arydep; 
  }
  private String Cierre(String at){
-     ///calcular bien  el cierre
-    String cierre = at;
     
+    ///calcular bien el cierre
+    String cierre = at;    
     boolean cambio=false;
-    
-   while(!cambio)
-   {
-    cambio=true;
-   for(Dependencias dep : _dep){
-    if(containsAny(cierre,dep.getEtCante().toCharArray())&&!cierre.contains(dep.getEtCado()))
+    while(!cambio)
     {
-        cierre+=dep.getEtCado();
-        cambio =false;
+        cambio=true;
+        for(Dependencias dep : _dep){
+            if(containsAny(cierre,dep.getEtCante().toCharArray())&&!cierre.contains(dep.getEtCado()))
+            {
+                cierre+=dep.getEtCado();
+                cambio =false;
+            }
+        }    
     }
-   }    
-   }
-    return cierre;
+    
+    // agrego esto para que el cierre salga ordenado bien bonito
+    
+    char[] chars = cierre.toCharArray();
+    Arrays.sort(chars);
+    String cierreOrdenado = new String(chars);
+    
+    return cierreOrdenado;
  }
+ 
+ 
    public static boolean containsAny(String str, char[] searchChars) {
       int cont=0;
       if (str == null || str.length() == 0 || searchChars == null || searchChars.length == 0) {
@@ -129,9 +140,9 @@ public class Operador {
        subsets.add(getSubset(input,s));
    }
   }
-  return subsets;
-   
+  return subsets;   
  }
+ 
  public String getSubset(char[] input, int[] subset){
      String result = "";
      for(int i=0;i < subset.length;i++)
@@ -183,5 +194,180 @@ public class Operador {
      
  }
 
+ // metodo para el calculo de las claves del conjunto de dependencias.
+ 
+ public List<String> CalcularClavesCandidatas(){
+     
+     List<String> clavesCantidatas = new ArrayList<>();
+     List<Atributo> atributos = _atri;
+     List<Dependencias> dependencias = _dep;
+     
+     // Primero genero el conjunto T
+     
+     List<String> listaAtributosString = new ArrayList<>();
+     
+     for(Atributo atributo : atributos){
+         listaAtributosString.add(atributo.getEtiqueta());
+     }          
+     java.util.Collections.sort(listaAtributosString);  
+     
+     List<String> T = new ArrayList(listaAtributosString);
+     String stringConjuntoAtributos = String.join("", T); 
+     
+     // Primero genero el conjunto Y de todos los atributos a derecha     
+     List<String> Y = ExtraerAtributosADerecha(dependencias);
+     
+     // se genera el conjunto Z = T-UY     
+     List<String> Z = CompararListas(T,Y);
+     
+     String cierre = Cierre(String.join("", Z));
+     
+     // se calcula el cierre de esta lista y se mira si es necesario continuar     
+     if (cierre == stringConjuntoAtributos)
+     {
+        clavesCantidatas.add(String.join("", Z));
+        return clavesCantidatas;
+     }
+     else
+     {
+         // se calcula el conjunto de atributos precindibles         
+         List<String> X = ExtraerAtributosAIzquierda(dependencias);
+         
+         // se calculoa el conjunto W         
+         List<String> W = CompararListas(T, X);
+         
+         // se arman los conjuntos en base a lo obtenido, cantidad de atributos que se van a cosiderar de V
+         List<String> V = CompararListas(T,W);
+         
+         int k = 1;
+         
+         List<String> A1 = new ArrayList(Z);
+         List<String> clavesUtilizadas = new ArrayList();
+         
+         while (V.size() > 0)
+         {
+         for (int i = 0; i < V.size(); i++) {
+             
+            // incluyo el primer atributo a Z
+            
+             List<String> A = new ArrayList(A1);
+             A.add(V.get(i));
+             java.util.Collections.sort(A);
+             String clave = String.join("", A);
+             
+
+             if (!clavesUtilizadas.contains(clave))
+             {
+                
+                String cierreParcial =  Cierre(clave);                
+                
+                if (stringConjuntoAtributos.trim().equals(cierreParcial.trim()))
+                {
+                    // si la clave genera todo el conjunto de atributos se agrega a la lista de claves candidatas.
+                    if (!EsSuperClave(clave,clavesCantidatas))
+                    {
+                        clavesCantidatas.add(clave);
+                    }
+                    clavesUtilizadas.add(clave);                    
+                }
+                else
+                {
+                    // sino se agrega a la lista de claves utilizadas
+                    clavesUtilizadas.add(clave);                
+                }
+                       
+             }
+             
+         }    
+         
+         A1.add(V.get(0));
+         V.remove(0);
+         
+         // si la primera combinatoria no sirvio,entonces agrego el primer parametro a U y lo saco dela lista de parametros posibles y vuelvo a empezar.
+         
+         }
+         
+         return clavesCantidatas;
+     }
+     
+     
+     
+     
+     
+     
+     
+ }
+
+    private List<String> ExtraerAtributosADerecha(List<Dependencias> dependencias) {
+        
+        String implicantesString = "";
+        List<String> implicantes = new ArrayList<>();
+        List<Atributo> listaAtributos = new ArrayList<>();
+        
+        for(Dependencias dep : dependencias){  
+            
+            listaAtributos = dep.getImplicados();
+            for(Atributo atributo : listaAtributos){
+                if (!implicantes.contains(atributo)){
+                    implicantes.add(atributo.getEtiqueta());
+                }
+            }            
+        }
+        
+        // ordeno los implicantes
+        
+        java.util.Collections.sort(implicantes);      
+        // implicantesString = String.join("", implicantes);
+        // return implicantesString;
+        
+        return implicantes;
+    }
+    
+    private List<String> ExtraerAtributosAIzquierda(List<Dependencias> dependencias) {
+        
+        String implicantesString = "";
+        List<String> implicantes = new ArrayList<>();
+        List<Atributo> listaAtributos = new ArrayList<>();
+        
+        for(Dependencias dep : dependencias){  
+            
+            listaAtributos = dep.getImplicantes();
+            for(Atributo atributo : listaAtributos){
+                if (!implicantes.contains(atributo.getEtiqueta())){
+                    implicantes.add(atributo.getEtiqueta());
+                }
+            }            
+        }
+        
+        java.util.Collections.sort(implicantes);  
+        
+        return implicantes;
+    }
+    
+    private List<String> CompararListas(List<String> a, List<String> b) {
+    List<String> resultado = new ArrayList<String>(a);
+    for (String element : b) {
+        // .add() returns false if element already exists
+        if (resultado.contains(element)) {
+            resultado.remove(element);
+        }
+    }
+    java.util.Collections.sort(resultado);
+    return resultado;
+}
+
+    private boolean EsSuperClave(String posibleClaveCandidata, List<String> clavesCantidatas) {
+        
+        boolean esSuperClave = false;
+        
+        for (String claveCandidata : clavesCantidatas) {
+            if (containsAny(posibleClaveCandidata, claveCandidata.toCharArray())) {
+                esSuperClave = true;
+            }
+        }
+        
+        return esSuperClave;
+    }
+         
     
 }
