@@ -151,7 +151,21 @@ public class Manejador {
         List<String> dp =_operador.CalcularClavesCandidatas(); 
         return dp;
     }
+<<<<<<< HEAD
      
+=======
+    
+    public String getDependenciasToString(){
+        
+        String dep = "";      
+        for(Dependencias deps: _info.getDependencias() ){
+            
+            dep+=deps.getEtCante()+"->"+deps.getEtCado()+"\n";
+        }
+        return dep;
+    }
+            
+>>>>>>> ef856ec49c1deed211c8e0da60dae5215a9cfc74
     
 }
 
