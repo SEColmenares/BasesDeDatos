@@ -132,8 +132,6 @@ public class Manejador {
   {
    _paint.setMarco(new Rectangle(marco.x+50,marco.y+50,marco.width-50,marco.height-50));
   }
-     
-     
      public void recubrimiento(){
      _operador.setAtributos(_info.getAtributos());
      _operador.setDependencias(_info.getDependencias());
@@ -144,14 +142,6 @@ public class Manejador {
      off=50;
      Apintar();
    }
-
-    public List<String> CalcularClavesCandidatas() {
-        _operador.setAtributos(_info.getAtributos());
-        _operador.setDependencias(_info.getDependencias());
-        List<String> dp =_operador.CalcularClavesCandidatas(); 
-        return dp;
-    }
-     
     
 }
 
