@@ -141,8 +141,8 @@ public class interfaz extends javax.swing.JFrame {
                     .addComponent(jButton5)
                     .addComponent(jTextField2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 483, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 30, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 502, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         jButton1.getAccessibleContext().setAccessibleName("jbton_cargar");
@@ -176,6 +176,7 @@ public class interfaz extends javax.swing.JFrame {
 //      _manejo.Exportar();
       _manejo.Cargar(Json);
       _manejo.Apintar();
+      jTextArea1.setText(null);
       jTextArea1.append(_manejo.getDependenciasToString());
       jTextArea1.append(System.getProperty("line.separator")); // Esto para el salto de línea 
 
@@ -226,6 +227,9 @@ public class interfaz extends javax.swing.JFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
         _manejo.recubrimiento();
+        jTextArea1.setText(null);
+        jTextArea1.append(_manejo.getDependenciasToString());
+      jTextArea1.append(System.getProperty("line.separator"));
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
