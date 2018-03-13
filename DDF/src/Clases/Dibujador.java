@@ -53,7 +53,7 @@ public class Dibujador extends JPanel{
  public void paint (Graphics g){
    super.paintComponent(g);
    
-   _marco = new Rectangle(10,38,g.getClipBounds().width-250,g.getClipBounds().height-50);
+   _marco = new Rectangle(10,38,g.getClipBounds().width-255,g.getClipBounds().height-58);
    g2 = (Graphics2D) g.create();
    g2.draw(_marco);
     for (Shape item : _tem) {

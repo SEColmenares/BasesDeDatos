@@ -71,8 +71,10 @@ public class Operador {
    List<Dependencias> arydep= new ArrayList<Dependencias>();
    for(Atributo at : dep.getImplicados()){
     List<Atributo> atlist= new ArrayList<Atributo>();
+    List<Atributo> implic= new ArrayList<Atributo>();
     atlist.add(at);
-    arydep.add(new Dependencias(dep.getImplicantes(),atlist,false));
+    implic.addAll(dep.getImplicantes());
+    arydep.add(new Dependencias(implic,atlist,false));
     cont++;
    }
     return arydep; 
@@ -153,13 +155,15 @@ public class Operador {
       // este for es cuando hay mas de dos atributos
    int num =dep.getImplicantes().size()-1;
    char[] etCante=dep.getEtCante().toCharArray();
-   boolean parar =true;
+   boolean parar =true, cont;
  
- if(num>1)
+ while(parar)
  {
+   if(num<=1)break;
+   cont=false;
    for(int i=0;i<num;i++)
    {
-    List<String> atCierre = ACalcular(etCante, num-i);  
+    List<String> atCierre = ACalcular(etCante, i+1);  
     for(String at : atCierre){
      if(!cierres.containsKey(at)){
       cierres.put(at,Cierre(at));
@@ -167,136 +171,137 @@ public class Operador {
      if(cierres.get(at).contains(dep.getEtCado())){
       // en aborrar va el atributo extraño pero me mame jjaja
       String aborra=dep.getEtCante().replaceAll(at,"");
-       dep.DltCante(aborra);
-       parar=false;
+      if(aborra.length()>1){
+        for(char ath :aborra.toCharArray()){
+          dep.DltCante(String.valueOf(ath));
+          cierres.clear();
+        }       
+      }
+      else{
+          dep.DltCante(aborra);
+          cierres.clear();
+      }
+          
+       cont=true;
        etCante=dep.getEtCante().toCharArray();
        num =dep.getImplicantes().size()-1;
        i=0;
+       break;
      }   
     }  
-    if(parar)break;
-    parar=true;
+    if(cont)break;
+    parar=false;
    }
    
  }
  if(num<2){
   // este for es cuando solo hay dos atributos en implicantes
-    for(Atributo at : dep.getImplicantes()){
-              
-     if(!cierres.containsKey(at.getEtiqueta())){
-      cierres.put(at.getEtiqueta(),Cierre(at.getEtiqueta()));
-      }
-     if(cierres.get(at.getEtiqueta()).contains(dep.getEtCado())){
-           dep.DltCante(at.getEtiqueta());
-     }           
+  
+    for(int i =0; i<dep.getImplicantes().size();i++ ){
+         dlt2(dep.getImplicantes().get(i).getEtiqueta(), dep, cierres);
      }
   }
      
  }
-
- // metodo para el calculo de las claves del conjunto de dependencias.
- 
- public List<String> CalcularClavesCandidatas(){
-     
-     List<String> clavesCantidatas = new ArrayList<>();
-     List<Atributo> atributos = _atri;
-     List<Dependencias> dependencias = _dep;
-     
-     // Primero genero el conjunto T
-     
-     List<String> listaAtributosString = new ArrayList<>();
-     
-     for(Atributo atributo : atributos){
-         listaAtributosString.add(atributo.getEtiqueta());
-     }          
-     java.util.Collections.sort(listaAtributosString);  
-     
-     List<String> T = new ArrayList(listaAtributosString);
-     String stringConjuntoAtributos = String.join("", T); 
-     
-     // Primero genero el conjunto Y de todos los atributos a derecha     
-     List<String> Y = ExtraerAtributosADerecha(dependencias);
-     
-     // se genera el conjunto Z = T-UY     
-     List<String> Z = CompararListas(T,Y);
-     
-     String cierre = Cierre(String.join("", Z));
-     
-     // se calcula el cierre de esta lista y se mira si es necesario continuar     
-     if (cierre == stringConjuntoAtributos)
-     {
-        clavesCantidatas.add(String.join("", Z));
-        return clavesCantidatas;
-     }
-     else
-     {
-         // se calcula el conjunto de atributos precindibles         
-         List<String> X = ExtraerAtributosAIzquierda(dependencias);
-         
-         // se calculoa el conjunto W         
-         List<String> W = CompararListas(T, X);
-         
-         // se arman los conjuntos en base a lo obtenido, cantidad de atributos que se van a cosiderar de V
-         List<String> V = CompararListas(T,W);
-         
-         int k = 1;
-         
-         List<String> A1 = new ArrayList(Z);
-         List<String> clavesUtilizadas = new ArrayList();
-         
-         while (V.size() > 0)
-         {
-         for (int i = 0; i < V.size(); i++) {
-             
-            // incluyo el primer atributo a Z
+ public void dlt2(String at , Dependencias dep,HashMap<String,String> cierres  ){
             
-             List<String> A = new ArrayList(A1);
-             A.add(V.get(i));
-             java.util.Collections.sort(A);
-             String clave = String.join("", A);
-             
-
-             if (!clavesUtilizadas.contains(clave))
-             {
-                
-                String cierreParcial =  Cierre(clave);                
-                
-                if (stringConjuntoAtributos.trim().equals(cierreParcial.trim()))
-                {
-                    // si la clave genera todo el conjunto de atributos se agrega a la lista de claves candidatas.
-                    if (!EsSuperClave(clave,clavesCantidatas))
-                    {
-                        clavesCantidatas.add(clave);
-                    }
-                    clavesUtilizadas.add(clave);                    
-                }
-                else
-                {
-                    // sino se agrega a la lista de claves utilizadas
-                    clavesUtilizadas.add(clave);                
-                }
-                       
-             }
-             
-         }    
-         
-         A1.add(V.get(0));
-         V.remove(0);
-         
-         // si la primera combinatoria no sirvio,entonces agrego el primer parametro a U y lo saco dela lista de parametros posibles y vuelvo a empezar.
-         
-         }
-         
-         return clavesCantidatas;
-     }
      
-     
-     
-     
-     
-     
-     
+     if(!cierres.containsKey(at)){
+      cierres.put(at,Cierre(at));
+      }
+     if(cierres.get(at).contains(dep.getEtCado())){
+           dep.DltCante(dep.getEtCante().replace(at, ""));
+           cierres.clear();
+     }  
  }
+ 
+  // metodo para el calculo de las claves del conjunto de dependencias.
+
+    public List<String> CalcularClavesCandidatas(){
+        
+        List<String> clavesCantidatas = new ArrayList<>();
+        List<String> clavesUtilizadas = new ArrayList();
+        List<Atributo> atributos = _atri;
+        List<Dependencias> dependencias = _dep;
+        List<String> listaAtributosString = new ArrayList<>();        
+        
+        // Primero genero el conjunto T    
+        
+        for(Atributo atributo : atributos){
+            listaAtributosString.add(atributo.getEtiqueta());
+        }          
+        java.util.Collections.sort(listaAtributosString);  
+        
+        List<String> T = new ArrayList(listaAtributosString);
+        String stringConjuntoAtributos = String.join("", T);         
+        
+        // Primero genero el conjunto Y de todos los atributos a derecha        
+        List<String> Y = ExtraerAtributosADerecha(dependencias);
+        
+        // se genera el conjunto Z = T-UY     
+        List<String> Z = CompararListas(T,Y);
+        
+        String cierre = Cierre(String.join("", Z));       
+        // se calcula el cierre de esta lista y se mira si es necesario continuar       
+        
+        if (cierre == stringConjuntoAtributos)
+        {
+            clavesCantidatas.add(String.join("", Z));
+            return clavesCantidatas;
+        }
+        else
+        {
+            // se calcula el conjunto de atributos precindibles
+            List<String> X = ExtraerAtributosAIzquierda(dependencias);
+            
+            // se calculoa el conjunto W
+            List<String> W = CompararListas(T, X);
+            
+            // se arman los conjuntos en base a lo obtenido, cantidad de atributos que se van a cosiderar de V
+            List<String> V = CompararListas(T,W);
+            
+            List<String> A1 = new ArrayList(Z);            
+            List<String> Vs = new ArrayList();
+            
+             // se generan todas las posibles combinaciones de V     
+
+            String str=V.toString().replaceAll(",", "");
+            char[] Vchar = str.substring(1, str.length()-1).replaceAll(" ", "").toCharArray();          
+            for (int k = 1; k <= V.size(); k++) {
+                Vs.addAll(ACalcular(Vchar, k));
+            }
+            
+            for (int i = 0; i < Vs.size(); i++) {
+                
+                // incluyo el primer atributo a Z            
+                List<String> A = new ArrayList(A1);
+                A.add(Vs.get(i));
+                java.util.Collections.sort(A);
+                String clave = String.join("", A);
+                
+                if (!clavesUtilizadas.contains(clave))
+                {
+                    String cierreParcial =  Cierre(clave);               
+                    if (stringConjuntoAtributos.trim().equals(cierreParcial.trim()))
+                    {
+                        // si la clave genera todo el conjunto de atributos se agrega a la lista de claves candidatas.
+                        if (!EsSuperClave(clave,clavesCantidatas))
+                        {
+                            clavesCantidatas.add(clave);
+                        }
+                        clavesUtilizadas.add(clave);                   
+                    }
+                    else
+                    {
+                        // sino se agrega a la lista de claves utilizadas
+                        clavesUtilizadas.add(clave);                       
+                    }
+                }
+            }     
+            return clavesCantidatas;
+        }
+    }
+
 
     private List<String> ExtraerAtributosADerecha(List<Dependencias> dependencias) {
         

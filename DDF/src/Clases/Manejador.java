@@ -126,7 +126,17 @@ public class Manejador {
 
     void CargarDependencias(List<Dependencias> dependencias) {
         
-        _info = new Info((ArrayList<Dependencias>) dependencias);
+        
+        if(_info==null)_info = new Info((ArrayList<Dependencias>) dependencias);
+        else{
+            for(Dependencias de :dependencias){
+                _info.addatri(de.getImplicantes());
+                _info.addatri(de.getImplicados());               
+            }
+            _info.addDep(dependencias);
+        }
+            
+            
     }
      public void setMarco(Rectangle marco)
   {
@@ -179,6 +189,11 @@ public class Manejador {
   public Info(ArrayList<Dependencias> dep )
   {
       dependencias = dep;
+      atributos = new ArrayList<Atributo>();
+      for(Dependencias de :dep){
+          addatri(de.getImplicantes());
+          addatri(de.getImplicados());
+      }
   };
   
   public List<Atributo> getAtributos() {
@@ -199,5 +214,13 @@ public class Manejador {
  
   public void addDep(List<Dependencias> age) {
     dependencias.addAll(age);
+  }
+  public void addatri(List<Atributo> at){
+      for(Atributo ath : at){
+      for(Atributo att :atributos){
+          if(att.getEtiqueta().trim().equals(ath.getEtiqueta()))return;
+      }
+      atributos.add(ath);
+      }
   }
 }

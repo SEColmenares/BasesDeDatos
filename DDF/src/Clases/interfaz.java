@@ -142,7 +142,7 @@ public class interfaz extends javax.swing.JFrame {
                     .addComponent(jTextField2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 502, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(0, 11, Short.MAX_VALUE))
         );
 
         jButton1.getAccessibleContext().setAccessibleName("jbton_cargar");
@@ -218,10 +218,13 @@ public class interfaz extends javax.swing.JFrame {
         String texto = jTextField1.getText();
         LectorDependecias lector = new  LectorDependecias();
         List<Dependencias> dependencias = lector.LeerDependencias(texto);
-        
+
         _manejo.CargarDependencias(dependencias);
         _manejo.Apintar();
         repaint();
+                jTextArea1.setText(null);
+      jTextArea1.append(_manejo.getDependenciasToString());
+      jTextArea1.append(System.getProperty("line.separator")); 
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -229,7 +232,7 @@ public class interfaz extends javax.swing.JFrame {
         _manejo.recubrimiento();
         jTextArea1.setText(null);
         jTextArea1.append(_manejo.getDependenciasToString());
-      jTextArea1.append(System.getProperty("line.separator"));
+        jTextArea1.append(System.getProperty("line.separator")); // Esto para el salto de línea 
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
