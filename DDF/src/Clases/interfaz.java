@@ -30,6 +30,10 @@ public class interfaz extends javax.swing.JFrame {
         initComponents();     
         _manejo = new Manejador();
         _manejo.setMarco(getContentPane().getBounds());
+          _cp = getContentPane();
+        _cp.add(_manejo.getPaint());
+         setDefaultCloseOperation(EXIT_ON_CLOSE);  
+          pack();
     }
 
     /**
@@ -61,7 +65,7 @@ public class interfaz extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setLabel("pintar");
+        jButton2.setText("borrar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -142,7 +146,7 @@ public class interfaz extends javax.swing.JFrame {
                     .addComponent(jTextField2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 502, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 11, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         jButton1.getAccessibleContext().setAccessibleName("jbton_cargar");
@@ -178,7 +182,8 @@ public class interfaz extends javax.swing.JFrame {
       _manejo.Apintar();
       jTextArea1.setText(null);
       jTextArea1.append(_manejo.getDependenciasToString());
-      jTextArea1.append(System.getProperty("line.separator")); // Esto para el salto de línea 
+      jTextArea1.append(System.getProperty("line.separator"));
+          repaint();// Esto para el salto de línea 
 
    }
    }
@@ -204,12 +209,10 @@ public class interfaz extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-            // TODO add your handling code here:    
-         _cp = getContentPane();
-        _cp.add(_manejo.getPaint());
-         setDefaultCloseOperation(EXIT_ON_CLOSE);  
-          pack();
-          repaint();
+            // TODO add your handling code here:   
+            _manejo.clear();
+              repaint();
+            jTextArea1.setText(null);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -232,7 +235,8 @@ public class interfaz extends javax.swing.JFrame {
         _manejo.recubrimiento();
         jTextArea1.setText(null);
         jTextArea1.append(_manejo.getDependenciasToString());
-        jTextArea1.append(System.getProperty("line.separator")); // Esto para el salto de línea 
+        jTextArea1.append(System.getProperty("line.separator"));
+        repaint();// Esto para el salto de línea 
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed

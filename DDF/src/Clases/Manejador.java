@@ -74,7 +74,8 @@ public class Manejador {
  }
  
     public void Apintar(){
-          
+       off=50;
+        _paint.ClearAll();
        for(Dependencias dep :_info.getDependencias()){
            dep.GenerarFigura();
            Point IniCante = new Point(dep.getPosicion()[0],dep.getPosicion()[1]);
@@ -149,12 +150,16 @@ public class Manejador {
      _operador.setDependencias(_info.getDependencias());
      List<Dependencias> dp =_operador.CalcularRecubrimiento(); 
      _paint.ClearAll();
-     _info.ClearDep();
+     _info.ClearAll();
      _info.addDep(dp);
      off=50;
      Apintar();
    }
-
+     public void clear (){
+         _info.ClearAll();
+         _paint.ClearAll();
+         off=50;
+     }
     public List<String> CalcularClavesCandidatas() {
         _operador.setAtributos(_info.getAtributos());
         _operador.setDependencias(_info.getDependencias());
@@ -204,9 +209,10 @@ public class Manejador {
     this.atributos = atri;
   }
    
-  public void ClearDep()
+  public void ClearAll()
   {
      dependencias.clear();
+     atributos.clear();
   }
   public ArrayList<Dependencias> getDependencias() {
     return dependencias;
