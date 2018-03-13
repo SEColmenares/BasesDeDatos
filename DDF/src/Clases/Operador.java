@@ -203,6 +203,7 @@ public class Operador {
   }
      
  }
+<<<<<<< HEAD
  public void dlt2(String at , Dependencias dep,HashMap<String,String> cierres  ){
             
      
@@ -214,6 +215,9 @@ public class Operador {
            cierres.clear();
      }  
  }
+=======
+ 
+>>>>>>> 27ce851156c636e276b45cb9d390558a2f381a62
  
   // metodo para el calculo de las claves del conjunto de dependencias.
 
@@ -259,10 +263,17 @@ public class Operador {
             
             // se arman los conjuntos en base a lo obtenido, cantidad de atributos que se van a cosiderar de V
             List<String> V = CompararListas(T,W);
+<<<<<<< HEAD
             
             List<String> A1 = new ArrayList(Z);            
             List<String> Vs = new ArrayList();
             
+=======
+            
+            List<String> A1 = new ArrayList(Z);            
+            List<String> Vs = new ArrayList();
+            
+>>>>>>> 27ce851156c636e276b45cb9d390558a2f381a62
              // se generan todas las posibles combinaciones de V     
 
             String str=V.toString().replaceAll(",", "");
