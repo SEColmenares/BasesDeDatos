@@ -129,13 +129,15 @@ public class Manejador {
      _operador.setDependencias(_info.getDependencias());
      List<Dependencias> dp =_operador.CalcularRecubrimiento(); 
      _paint.ClearAll();
-     _info.ClearAll();
+     _info.ClearDp();
      _info.addDep(dp);
+     
      off=50;
      Apintar();
    }
      public void clear (){
-         _info.ClearAll();
+         _info.ClearAt();
+         _info.ClearDp();
          _paint.ClearAll();
          off=50;
      }
@@ -185,12 +187,15 @@ public class Manejador {
   }
 
   public void setAtributos(List<Atributo> atri) {
-    this.atributos = atri;
+    this.atributos.addAll(atri);
   }
    
-  public void ClearAll()
+  public void ClearDp()
   {
      dependencias.clear();
+  }
+    public void ClearAt()
+  {
      atributos.clear();
   }
   public ArrayList<Dependencias> getDependencias() {
@@ -201,11 +206,16 @@ public class Manejador {
     dependencias.addAll(age);
   }
   public void addatri(List<Atributo> at){
+      boolean cont = false;
       for(Atributo ath : at){
       for(Atributo att :atributos){
-          if(att.getEtiqueta().trim().equals(ath.getEtiqueta()))return;
+          if(att.getEtiqueta().trim().equals(ath.getEtiqueta())){
+              cont=true;
+              break;
+          }
       }
-      atributos.add(ath);
+       if(!cont)atributos.add(ath);
+       cont = false;
       }
   }
 }

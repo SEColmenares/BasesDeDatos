@@ -26,10 +26,12 @@ public class Operador {
   _dep = new ArrayList<Dependencias>();
 }
  public void setDependencias( List<Dependencias> dep){
-   _dep=dep;  
+    _dep.clear();
+   _dep.addAll(dep);  
  }
  public void setAtributos(List<Atributo> atri){
-   _atri=atri;
+    _atri.clear();
+   _atri.addAll(atri);
  }
  public List<Dependencias> CalcularRecubrimiento(){
    
@@ -155,14 +157,12 @@ public class Operador {
       // este for es cuando hay mas de dos atributos
    int num =dep.getImplicantes().size()-1;
    char[] etCante=dep.getEtCante().toCharArray();
-   boolean parar =true, cont;
  
- while(parar)
- {
-   if(num<=1)break;
-   cont=false;
+ if(num>1)
+ {  
    for(int i=0;i<num;i++)
    {
+    if(num<=1)break;
     List<String> atCierre = ACalcular(etCante, i+1);  
     for(String at : atCierre){
      if(!cierres.containsKey(at)){
@@ -181,16 +181,12 @@ public class Operador {
           dep.DltCante(aborra);
           cierres.clear();
       }
-          
-       cont=true;
        etCante=dep.getEtCante().toCharArray();
        num =dep.getImplicantes().size()-1;
        i=0;
        break;
      }   
     }  
-    if(cont)break;
-    parar=false;
    }
    
  }
@@ -244,13 +240,15 @@ public class Operador {
         String cierre = Cierre(String.join("", Z));       
         // se calcula el cierre de esta lista y se mira si es necesario continuar       
         
-        if (cierre == stringConjuntoAtributos)
+        if (cierre.trim().equals(stringConjuntoAtributos.trim()))
         {
             clavesCantidatas.add(String.join("", Z));
             return clavesCantidatas;
         }
         else
         {
+            List<String> Vs = new ArrayList();
+            
             // se calcula el conjunto de atributos precindibles
             List<String> X = ExtraerAtributosAIzquierda(dependencias);
             
@@ -258,12 +256,13 @@ public class Operador {
             List<String> W = CompararListas(T, X);
             
             // se arman los conjuntos en base a lo obtenido, cantidad de atributos que se van a cosiderar de V
-            List<String> V = CompararListas(T,W);
+            List<String> V = CompararListas(T,W);      
             
-            List<String> A1 = new ArrayList(Z);            
-            List<String> Vs = new ArrayList();
+            String cierreZString = Cierre(String.join("", Z));
+            List<String> cierreZ = Arrays.asList(cierreZString.split(","));
             
-             // se generan todas las posibles combinaciones de V     
+            // se generan todas las posibles combinaciones de
+            
 
             String str=V.toString().replaceAll(",", "");
             char[] Vchar = str.substring(1, str.length()-1).replaceAll(" ", "").toCharArray();          
@@ -274,7 +273,7 @@ public class Operador {
             for (int i = 0; i < Vs.size(); i++) {
                 
                 // incluyo el primer atributo a Z            
-                List<String> A = new ArrayList(A1);
+                List<String> A = new ArrayList(cierreZ);
                 A.add(Vs.get(i));
                 java.util.Collections.sort(A);
                 String clave = String.join("", A);
@@ -305,7 +304,6 @@ public class Operador {
 
     private List<String> ExtraerAtributosADerecha(List<Dependencias> dependencias) {
         
-        String implicantesString = "";
         List<String> implicantes = new ArrayList<>();
         List<Atributo> listaAtributos = new ArrayList<>();
         
@@ -330,7 +328,6 @@ public class Operador {
     
     private List<String> ExtraerAtributosAIzquierda(List<Dependencias> dependencias) {
         
-        String implicantesString = "";
         List<String> implicantes = new ArrayList<>();
         List<Atributo> listaAtributos = new ArrayList<>();
         
