@@ -33,8 +33,8 @@ public class Operador {
     _atri.clear();
    _atri.addAll(atri);
  }
- public List<Dependencias> CalcularRecubrimiento(){
-   
+ public List<Dependencias> CalcularRecubrimiento(String dt){
+    
    List<Dependencias> L =new ArrayList<Dependencias>();
    HashMap<String,String> cierres = new HashMap<String,String>();
    String da ="";
@@ -46,7 +46,7 @@ public class Operador {
    _dep.clear();
    _dep.addAll(L);
    L.clear();
-  
+     SetInfo(da, "L0");
    for(Dependencias dep : _dep){
    if(dep.getImplicantes().size()<=1){
     L.add(dep);
@@ -58,13 +58,22 @@ public class Operador {
    
    _dep.clear();
    _dep.addAll(L);
+    SetInfo(da, "L1");
     for(Dependencias dep : L){   
         _dep.remove(dep);      
         String cierredep=Cierre(dep.getEtCante());
         if(!cierredep.contains(dep.getEtCado()))_dep.add(dep);          
    }
-    
+    SetInfo(da, "L2");
     return new ArrayList<Dependencias>(_dep);
+ }
+ private void SetInfo(String da, String ps){
+      da += ps+"={";      
+   for(Dependencias deps: _dep ){
+            
+            da+=deps.getEtCante()+"->"+deps.getEtCado()+";";
+   }
+   da+="}\n";
  }
  
  private List<Dependencias> DesTrivial(Dependencias dep){  

@@ -4,27 +4,24 @@
  * and open the template in the editor.
  */
 package Clases;
-import com.sun.javafx.scene.control.skin.VirtualFlow;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
+import javax.swing.JScrollPane;
 import java.awt.Shape;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.awt.geom.Line2D;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.HashMap;
-import java.awt.geom.AffineTransform;
+
 
 /**
  *
  * @author u1401
  */
-public class Dibujador extends JPanel{
+public class Dibujador extends JScrollPane{
     
  private HashMap<String,Shape> _figuras;
  private List<Shape> _tem;
@@ -34,6 +31,7 @@ public class Dibujador extends JPanel{
  private Rectangle _marco;
  private HashMap<String,Point>_etiqueta;
  private int ARR_SIZE = 4;
+
  
  
  
@@ -44,19 +42,28 @@ public class Dibujador extends JPanel{
      _flechasAetiqueta = new ArrayList<Point[]>();
      _etiqueta = new HashMap<String,Point>();
      
-//     _marco = new Rectangle(100, 100,200,200);
-      setSize(1000,1000);
+   _marco = new Rectangle(100, 100,200,200);
+      
 //      setSize(100,100);
+    
+     setAutoscrolls(true);
      setVisible(true);
  }
  
  public void paint (Graphics g){
    super.paintComponent(g);
-   
-   _marco = new Rectangle(10,38,g.getClipBounds().width-255,g.getClipBounds().height-58);
+        paintComponent(g);
+ }
+ 
+   @Override
+  protected void paintComponent(Graphics g) {
+    super.paintComponent(g);
+     _marco = this.getBounds();
    g2 = (Graphics2D) g.create();
-   g2.draw(_marco);
+//   g2.draw(_marco);
     for (Shape item : _tem) {
+         Point pt = new Point((int)item.getBounds().getMaxX(),(int)item.getBounds().getMaxY());
+         if(!_marco.contains(pt.x,pt.y)) resizeD(pt.x, pt.y);
           g2.setColor(Color.BLACK);
           g2.draw(item);            
       }
@@ -75,10 +82,13 @@ public class Dibujador extends JPanel{
          g2.drawLine(fc[0].x, fc[0].y, fc[1].x, fc[1].y);
       }
  
-    
-    
- }
- 
+   
+  }
+
+  @Override
+  public Dimension getPreferredSize() {
+    return new Dimension(_marco.width, _marco.height);
+  }
 private void drawArrowLine(Graphics2D g, Point ini, Point fin) {
     int dx = fin.x - ini.x, dy = fin.y - ini.y;
     double D = Math.sqrt(dx*dx + dy*dy);
@@ -99,20 +109,7 @@ private void drawArrowLine(Graphics2D g, Point ini, Point fin) {
     g.drawLine(ini.x, ini.y, fin.x, fin.y);
     g.fillPolygon(xpoints, ypoints, 3);
 }
-  @Override
-        protected void paintComponent(Graphics g) {
-            super.paintComponent(g);
-
-            Graphics2D g2 = (Graphics2D) g.create();
-
-            for (Shape item : _figuras.values()) {
-               g2.draw(item);
-             }
-
-            g2.dispose();
-        }
-   
-        
+      
    public void AgregarFigura(String etiqueta ,Shape fig){
       _figuras.put(etiqueta,fig);     
    }
@@ -131,6 +128,15 @@ private void drawArrowLine(Graphics2D g, Point ini, Point fin) {
       _flechas.clear();
       _flechasAetiqueta.clear();
       _etiqueta.clear();
+   }
+   private void resizeD(int x , int y){
+       
+       Dimension ddib = this.getSize();
+       if(y>ddib.height)ddib.height=y+30;
+       if(x>ddib.width)ddib.width=x+30;
+       
+        this.resize(ddib.width, ddib.height);
+       _marco.getBounds();
    }
    public Point UltimaPosicion(){    
       if(_figuras.size()!=0)return _tem.get(_figuras.size()-1).getBounds().getLocation();
@@ -152,8 +158,9 @@ private void drawArrowLine(Graphics2D g, Point ini, Point fin) {
    public Point getPuntoEtiqueta(String et){
    return _etiqueta.get(et);
    }
-   public boolean content(Point pt){
-      return _marco.contains(pt);
+   public boolean content(Point pt){      
+       if(pt.x==0 && pt.y==0)return false;
+    return _marco.contains(pt);
    }
 //    public static void main(String[] args) {
 ////       Run the GUI codes on the Event-Dispatching thread for thread safety

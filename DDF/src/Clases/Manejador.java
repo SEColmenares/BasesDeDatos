@@ -6,15 +6,13 @@
 package Clases;
 import java.util.ArrayList;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
-import com.sun.javafx.scene.control.skin.VirtualFlow;
-import java.awt.Graphics;
+import com.google.gson.reflect.TypeToken;
 import java.awt.Rectangle;
-import java.util.HashSet;
 import java.util.List;
 import java.awt.Point;
-import java.util.Set;
+import java.awt.Window.Type;
+import java.awt.Event;
 
 /**
  *
@@ -25,10 +23,11 @@ public class Manejador {
  private Dibujador _paint;
  private int off=50;
  private Operador _operador;
+ public  Event _set;
  
- public Manejador(){
+ public Manejador( Dibujador paint){
      
-    _paint = new Dibujador();
+    _paint = paint;
     _operador = new Operador();
 }
  
@@ -38,39 +37,21 @@ public class Manejador {
  public void Cargar(String jsonString)
  {   
       try{
-            Gson gson = new Gson();                
-            _info  = gson.fromJson(jsonString, Info.class);                
+            Gson gson = new Gson(); 
+            java.lang.reflect.Type fooType = new TypeToken<Info>() {}.getType(); 
+            _info  = gson.fromJson(jsonString, fooType);                
         }catch(JsonSyntaxException e){
             System.err.println("JsonSyntaxException: " + e.getMessage());
         }   
  } 
  
  
- public void Exportar()
+ public String Exportar()
  {
-     List<Atributo> atributos = new ArrayList<Atributo>();
-     atributos.add( new Atributo("Avion", "A"));
-     atributos.add( new Atributo("Bebe", "B"));
-     atributos.add( new Atributo("Casa", "C"));
-     atributos.add( new Atributo("Dedo", "D"));
-     atributos.add( new Atributo("Etiqueta", "E"));
-     atributos.add( new Atributo("Fabula", "F"));
-     List<Atributo> unoo =new ArrayList<Atributo>();
-     unoo.add( new Atributo("Avion", "A"));
-     List<Atributo> unos =new ArrayList<Atributo>();
-     unos.add( new Atributo("Bebe", "B"));
-     unos.add( new Atributo("Casa", "C"));
-     Dependencias uno = new Dependencias(unoo,unos, false);
-     Dependencias dos = new Dependencias(unoo,unos, false);
-     Dependencias tres = new Dependencias(unoo,unos, false);
-     ArrayList<Dependencias> dep = new ArrayList<>();
-     dep.add(uno);
-     dep.add(dos);
-     dep.add(tres);
-     _info = new Info(atributos, dep);
-      Gson gson = new GsonBuilder().setPrettyPrinting().create();
-
-      String jsonEjemplo = gson.toJson(_info);
+       Gson gson = new Gson();
+     java.lang.reflect.Type fooType = new TypeToken<Info>() {}.getType();  
+      String jsonEjemplo =  gson.toJson(_info, fooType);
+      return jsonEjemplo;
  }
  
     public void Apintar(){
@@ -146,9 +127,10 @@ public class Manejador {
      
      
      public void recubrimiento(){
+        String dt ="";
      _operador.setAtributos(_info.getAtributos());
      _operador.setDependencias(_info.getDependencias());
-     List<Dependencias> dp =_operador.CalcularRecubrimiento(); 
+     List<Dependencias> dp =_operador.CalcularRecubrimiento(dt); 
      _paint.ClearAll();
      _info.ClearDp();
      _info.addDep(dp);
@@ -171,12 +153,18 @@ public class Manejador {
     
     public String getDependenciasToString(){
         
-        String dep = "";      
+        String dep = "L={";      
         for(Dependencias deps: _info.getDependencias() ){
             
-            dep+=deps.getEtCante()+"->"+deps.getEtCado()+"\n";
+            dep+=deps.getEtCante()+"->"+deps.getEtCado()+";";
         }
+        dep+="}\nT={";
+        for(Atributo at : _info.getAtributos()){
+           dep+=at.getNombre()+"("+at.getEtiqueta()+");"; 
+        }
+        dep+="}";
         return dep;
+        
     }
             
     
