@@ -12,7 +12,10 @@ import javax.swing.JFileChooser;
 import java.io.FileReader;
 import java.io.BufferedReader;
 import java.awt.Container;
+<<<<<<< HEAD
 import java.awt.event.AdjustmentListener;
+=======
+>>>>>>> 52dde7578c4c602f72f32006fae0e4c30c150ed8
 import java.io.FileWriter;
 import java.util.List;
 /**
@@ -47,6 +50,7 @@ public class interfaz extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
+<<<<<<< HEAD
         ta_panel = new javax.swing.JTextArea();
         tb_diseño = new javax.swing.JToolBar();
         bt_borrar = new javax.swing.JButton();
@@ -63,6 +67,10 @@ public class interfaz extends javax.swing.JFrame {
         mb_app = new javax.swing.JMenu();
         mi_abrir = new javax.swing.JMenuItem();
         mi_guardar = new javax.swing.JMenuItem();
+=======
+        jTextArea1 = new javax.swing.JTextArea();
+        bt_exportar = new javax.swing.JButton();
+>>>>>>> 52dde7578c4c602f72f32006fae0e4c30c150ed8
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -185,6 +193,13 @@ public class interfaz extends javax.swing.JFrame {
 
         setJMenuBar(jMenuBar1);
 
+        bt_exportar.setText("exportar");
+        bt_exportar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_exportarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -194,6 +209,7 @@ public class interfaz extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(tb_diseño, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+<<<<<<< HEAD
                 .addComponent(tb_algoritmo, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
@@ -204,6 +220,38 @@ public class interfaz extends javax.swing.JFrame {
                     .addComponent(tb_algoritmo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(sp_diseño, javax.swing.GroupLayout.DEFAULT_SIZE, 511, Short.MAX_VALUE)
+=======
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(bt_exportar)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2)
+                    .addComponent(jLabel1)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton3)
+                    .addComponent(jButton4)
+                    .addComponent(jButton5)
+                    .addComponent(jTextField2)
+                    .addComponent(bt_exportar))
+>>>>>>> 52dde7578c4c602f72f32006fae0e4c30c150ed8
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE))
         );
@@ -331,6 +379,34 @@ public class interfaz extends javax.swing.JFrame {
   }
     }//GEN-LAST:event_mi_guardarActionPerformed
 
+    private void bt_exportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_exportarActionPerformed
+        // TODO add your handling code here:
+        String aexpo= _manejo.Exportar();
+        try
+ {
+  String nombre="";
+  JFileChooser file=new JFileChooser();
+  file.showSaveDialog(this);
+  File guarda =file.getSelectedFile();
+ 
+  if(guarda !=null)
+  {
+   /*guardamos el archivo y le damos el formato directamente,
+    * si queremos que se guarde en formato doc lo definimos como .doc*/
+    FileWriter  save=new FileWriter(guarda+".JSON");
+    save.write(aexpo);
+    save.close();
+    }
+ }
+  catch(IOException ex)
+  {
+   JOptionPane.showMessageDialog(null,
+        "Su archivo no se ha guardado",
+           "Advertencia",JOptionPane.WARNING_MESSAGE);
+  }
+        
+    }//GEN-LAST:event_bt_exportarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -367,6 +443,7 @@ public class interfaz extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+<<<<<<< HEAD
     private javax.swing.JButton bt_aplicar;
     private javax.swing.JButton bt_borrar;
     private javax.swing.JButton bt_claves;
@@ -374,6 +451,15 @@ public class interfaz extends javax.swing.JFrame {
     private javax.swing.JButton bt_recubrimiento;
     private javax.swing.JComboBox<String> cb_algoritmo;
     private javax.swing.JMenuBar jMenuBar1;
+=======
+    private javax.swing.JButton bt_exportar;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JLabel jLabel1;
+>>>>>>> 52dde7578c4c602f72f32006fae0e4c30c150ed8
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JMenu mb_app;
     private javax.swing.JMenuItem mi_abrir;

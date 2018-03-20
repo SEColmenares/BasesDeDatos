@@ -64,16 +64,57 @@
           <Group type="102" alignment="0" attributes="0">
               <Component id="tb_diseño" min="-2" pref="303" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
+<<<<<<< HEAD
               <Component id="tb_algoritmo" min="-2" pref="234" max="-2" attributes="0"/>
+=======
+              <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jTextField1" min="-2" pref="118" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jButton3" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jButton4" min="-2" pref="104" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jButton5" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jScrollPane1" max="32767" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <Component id="jTextField2" min="-2" pref="132" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="bt_exportar" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+>>>>>>> 52dde7578c4c602f72f32006fae0e4c30c150ed8
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
+<<<<<<< HEAD
           <Group type="102" alignment="1" attributes="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="tb_diseño" max="32767" attributes="0"/>
                   <Component id="tb_algoritmo" max="32767" attributes="0"/>
+=======
+          <Group type="102" alignment="0" attributes="0">
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jButton2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jTextField1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jButton3" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jButton4" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jButton5" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jTextField2" alignment="3" max="32767" attributes="0"/>
+                  <Component id="bt_exportar" alignment="3" min="-2" max="-2" attributes="0"/>
+>>>>>>> 52dde7578c4c602f72f32006fae0e4c30c150ed8
               </Group>
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Component id="sp_diseño" pref="511" max="32767" attributes="0"/>
@@ -103,6 +144,7 @@
         </Component>
       </SubComponents>
     </Container>
+<<<<<<< HEAD
     <Container class="javax.swing.JToolBar" name="tb_dise&#xf1;o">
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -317,5 +359,15 @@
         </Component>
       </SubComponents>
     </Container>
+=======
+    <Component class="javax.swing.JButton" name="bt_exportar">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="exportar"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_exportarActionPerformed"/>
+      </Events>
+    </Component>
+>>>>>>> 52dde7578c4c602f72f32006fae0e4c30c150ed8
   </SubComponents>
 </Form>
