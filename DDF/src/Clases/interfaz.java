@@ -12,8 +12,8 @@ import javax.swing.JFileChooser;
 import java.io.FileReader;
 import java.io.BufferedReader;
 import java.awt.Container;
-import java.awt.event.AdjustmentListener;
 import java.io.FileWriter;
+import java.util.ArrayList;
 import java.util.List;
 /**
  *
@@ -26,7 +26,6 @@ public class interfaz extends javax.swing.JFrame {
      */
     Manejador _manejo;
     Container _cp ;
-   
     public interfaz() {
         initComponents();     
        
@@ -34,9 +33,15 @@ public class interfaz extends javax.swing.JFrame {
         Dibujador _paint = new Dibujador();
         this.sp_diseño.setViewportView(_paint);      
         _manejo = new Manejador(_paint);
+        _manejo.setEvento(_eHtext);      
          pack();
     }
-
+    IEventHandler _eHtext = new IEventHandler() {
+        @Override
+        public void onChange(String imprimir) {
+            ta_panel.append("\n"+imprimir);//To change body of generated methods, choose Tools | Templates.
+        }
+    };
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -145,7 +150,7 @@ public class interfaz extends javax.swing.JFrame {
         tb_algoritmo.setBorder(javax.swing.BorderFactory.createTitledBorder("Algoritmo"));
         tb_algoritmo.setRollover(true);
 
-        cb_algoritmo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cb_algoritmo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2 Forma Normal", "3 Forma Normal", "Forma Normal BC", "Item 4" }));
         cb_algoritmo.setMaximumSize(new java.awt.Dimension(150, 24));
         cb_algoritmo.setMinimumSize(new java.awt.Dimension(150, 24));
         cb_algoritmo.setPreferredSize(new java.awt.Dimension(150, 24));
@@ -159,6 +164,11 @@ public class interfaz extends javax.swing.JFrame {
         bt_aplicar.setMinimumSize(new java.awt.Dimension(45, 24));
         bt_aplicar.setPreferredSize(new java.awt.Dimension(45, 24));
         bt_aplicar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        bt_aplicar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_aplicarActionPerformed(evt);
+            }
+        });
         tb_algoritmo.add(bt_aplicar);
 
         mb_app.setText("Archivo");
@@ -330,6 +340,31 @@ public class interfaz extends javax.swing.JFrame {
            "Advertencia",JOptionPane.WARNING_MESSAGE);
   }
     }//GEN-LAST:event_mi_guardarActionPerformed
+
+    private void bt_aplicarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_aplicarActionPerformed
+        // TODO add your handling code here:
+        try{
+            switch(cb_algoritmo.getSelectedItem().toString()){
+                
+            case "2 Forma Normal":_manejo.calcular2FN();
+                     break;
+            case "3 Forma Normal":;
+                     break;
+            case "Forma Normal BC":;
+                     break;
+            default: 
+                     break ;                           
+            }
+            
+            
+            
+            
+            
+        }
+       catch(Exception e){
+       JOptionPane.showMessageDialog(null, e);
+     }
+    }//GEN-LAST:event_bt_aplicarActionPerformed
 
     /**
      * @param args the command line arguments

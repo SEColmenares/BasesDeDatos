@@ -11,28 +11,40 @@ import com.google.gson.reflect.TypeToken;
 import java.awt.Rectangle;
 import java.util.List;
 import java.awt.Point;
-import java.awt.Window.Type;
 import java.awt.Event;
+import java.util.HashMap;
+import java.util.ListIterator;
 
 /**
  *
  * @author jhon_quiceno
  */
+
 public class Manejador {
  private Info _info;
  private Dibujador _paint;
  private int off=50;
  private Operador _operador;
  public  Event _set;
+ private HashMap<String,ArrayList>_relaciones;
+ private static IEventHandler _event;
  
  public Manejador( Dibujador paint){
      
     _paint = paint;
     _operador = new Operador();
+    _relaciones = new HashMap<>();
 }
  
  public Dibujador getPaint(){
      return _paint;
+ }
+ 
+ public void setEvento(IEventHandler ev){
+   _event = ev;
+ }
+ private void triggerText(String imprimir){
+     (_event).onChange(imprimir);
  }
  public void Cargar(String jsonString)
  {   
@@ -150,6 +162,17 @@ public class Manejador {
         List<String> dp =_operador.CalcularClavesCandidatas(); 
         return dp;
     }
+    public void calcular2FN(){
+        String aImprimir="2 Forma Normal \n";
+        Algoritmos alg = new Algoritmos(_info.getAtributos(), _info.getDependencias());
+        _relaciones.put("2FN", alg.Calcular2FN());
+        ListIterator li = _relaciones.get("2FN").listIterator();
+         while (li.hasNext()) {
+          Relacion R =(Relacion)li.next();
+          aImprimir += R.getNombreR() +"\n"+getDependenciasToString(R.getAtributos(),R.getDependencias())+"\n";      
+        }
+         triggerText(aImprimir);      
+    }
     
     public String getDependenciasToString(){
         
@@ -166,16 +189,31 @@ public class Manejador {
         return dep;
         
     }
+        public String getDependenciasToString(ArrayList<Atributo> att,ArrayList<Dependencias> depps ){
+        
+        String dep = "L={";      
+        for(Dependencias deps: depps ){
+            
+            dep+=deps.getEtCante()+"->"+deps.getEtCado()+";";
+        }
+        dep+="}\nT={";
+        for(Atributo at : att){
+           dep+=at.getNombre()+"("+at.getEtiqueta()+");"; 
+        }
+        dep+="}";
+        return dep;
+        
+    }
             
     
 }
 
 
   class Info {
-  private List<Atributo> atributos;
+  private ArrayList<Atributo> atributos;
   private ArrayList<Dependencias> dependencias;
   
-  public Info(List<Atributo> atri,ArrayList<Dependencias> dep )
+  public Info(ArrayList<Atributo> atri,ArrayList<Dependencias> dep )
   {
    atributos = atri;
    dependencias = dep;
@@ -191,7 +229,7 @@ public class Manejador {
       }
   };
   
-  public List<Atributo> getAtributos() {
+  public ArrayList<Atributo> getAtributos() {
     return atributos;
   }
 
