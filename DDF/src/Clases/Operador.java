@@ -33,7 +33,7 @@ public class Operador {
     _atri.clear();
    _atri.addAll(atri);
  }
- public List<Dependencias> CalcularRecubrimiento(String dt){
+ public ArrayList CalcularRecubrimiento(String dt){
     
    List<Dependencias> L =new ArrayList<Dependencias>();
    HashMap<String,String> cierres = new HashMap<String,String>();
@@ -65,7 +65,7 @@ public class Operador {
         if(!cierredep.contains(dep.getEtCado()))_dep.add(dep);          
    }
     SetInfo(da, "L2");
-    return new ArrayList<Dependencias>(_dep);
+    return new ArrayList<>(_dep);
  }
  private void SetInfo(String da, String ps){
       da += ps+"={";      

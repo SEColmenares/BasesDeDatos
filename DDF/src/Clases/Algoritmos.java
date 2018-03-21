@@ -63,6 +63,26 @@ public class Algoritmos {
        }
       return new ArrayList<>(_2FN) ;
     }
+    
+    void CalcularProyeccion(ArrayList proy){
+     
+        ArrayList G = CalcularRM();
+        ArrayList W = new ArrayList(_atributo);
+        W.removeAll(proy);
+        Iterator<Atributo> itW = W.iterator();
+        while(itW.hasNext()){
+            Atributo at = itW.next();
+            W.remove(at);
+            
+        }
+        
+    }
+    ArrayList CalcularRM(){
+        _operador = new Operador();
+        _operador.setAtributos(_atributo);
+        _operador.setDependencias(_dep);
+        return _operador.CalcularRecubrimiento("");
+    }
     void CalcularClaveR(Relacion R){
         _operador = new Operador();
         _operador.setAtributos(R.getAtributos());

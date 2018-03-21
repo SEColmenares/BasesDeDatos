@@ -150,7 +150,7 @@ public class interfaz extends javax.swing.JFrame {
         tb_algoritmo.setBorder(javax.swing.BorderFactory.createTitledBorder("Algoritmo"));
         tb_algoritmo.setRollover(true);
 
-        cb_algoritmo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2 Forma Normal", "3 Forma Normal", "Forma Normal BC", "Item 4" }));
+        cb_algoritmo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2 Forma Normal", "3 Forma Normal", "Forma Normal BC", "Proyección" }));
         cb_algoritmo.setMaximumSize(new java.awt.Dimension(150, 24));
         cb_algoritmo.setMinimumSize(new java.awt.Dimension(150, 24));
         cb_algoritmo.setPreferredSize(new java.awt.Dimension(150, 24));

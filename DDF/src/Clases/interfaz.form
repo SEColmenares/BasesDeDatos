@@ -276,7 +276,7 @@
                 <StringItem index="0" value="2 Forma Normal"/>
                 <StringItem index="1" value="3 Forma Normal"/>
                 <StringItem index="2" value="Forma Normal BC"/>
-                <StringItem index="3" value="Item 4"/>
+                <StringItem index="3" value="Proyecci&#xf3;n"/>
               </StringArray>
             </Property>
             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
