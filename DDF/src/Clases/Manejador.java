@@ -62,14 +62,14 @@ public class Manejador {
  {
        Gson gson = new Gson();
      java.lang.reflect.Type fooType = new TypeToken<Info>() {}.getType();  
-      String jsonEjemplo =  gson.toJson(_info, fooType);
+      String jsonEjemplo =  gson.toJson(getInfo(), fooType);
       return jsonEjemplo;
  }
  
     public void Apintar(){
        off=50;
         _paint.ClearAll();
-       for(Dependencias dep :_info.getDependencias()){
+       for(Dependencias dep :getInfo().getDependencias()){
            dep.GenerarFigura();
            Point IniCante = new Point(dep.getPosicion()[0],dep.getPosicion()[1]);
            Point IniCado = new Point(dep.getPosicion()[2],dep.getPosicion()[3]);                  
@@ -121,13 +121,13 @@ public class Manejador {
     void CargarDependencias(List<Dependencias> dependencias) {
         
         
-        if(_info==null)_info = new Info((ArrayList<Dependencias>) dependencias);
+        if(getInfo()==null)_info = new Info((ArrayList<Dependencias>) dependencias);
         else{
             for(Dependencias de :dependencias){
-                _info.addatri(de.getImplicantes());
-                _info.addatri(de.getImplicados());               
+                getInfo().addatri(de.getImplicantes());
+                getInfo().addatri(de.getImplicados());               
             }
-            _info.addDep(dependencias);
+            getInfo().addDep(dependencias);
         }
             
             
@@ -140,49 +140,49 @@ public class Manejador {
      
      public void recubrimiento(){
         String dt ="";
-     _operador.setAtributos(_info.getAtributos());
-     _operador.setDependencias(_info.getDependencias());
+     _operador.setAtributos(getInfo().getAtributos());
+     _operador.setDependencias(getInfo().getDependencias());
      List<Dependencias> dp =_operador.CalcularRecubrimiento(dt); 
      _paint.ClearAll();
-     _info.ClearDp();
-     _info.addDep(dp);
+        getInfo().ClearDp();
+        getInfo().addDep(dp);
      
      off=50;
      Apintar();
    }
      public void clear (){
-         _info.ClearAt();
-         _info.ClearDp();
+         getInfo().ClearAt();
+         getInfo().ClearDp();
          _paint.ClearAll();
          off=50;
      }
     public List<String> CalcularClavesCandidatas() {
-        _operador.setAtributos(_info.getAtributos());
-        _operador.setDependencias(_info.getDependencias());
+        _operador.setAtributos(getInfo().getAtributos());
+        _operador.setDependencias(getInfo().getDependencias());
         List<String> dp =_operador.CalcularClavesCandidatas(); 
         return dp;
     }
     public void calcular2FN(){
         String aImprimir="2 Forma Normal \n";
-        Algoritmos alg = new Algoritmos(_info.getAtributos(), _info.getDependencias());
+        Algoritmos alg = new Algoritmos(getInfo().getAtributos(), getInfo().getDependencias());
         _relaciones.put("2FN", alg.Calcular2FN());
         ListIterator li = _relaciones.get("2FN").listIterator();
-         while (li.hasNext()) {
-          Relacion R =(Relacion)li.next();
-          aImprimir += R.getNombreR() +"\n"+getDependenciasToString(R.getAtributos(),R.getDependencias())+"\n";      
+        while (li.hasNext()) {
+            Relacion R =(Relacion)li.next();
+            aImprimir += R.getNombreR() +"\n"+getDependenciasToString(R.getAtributos(),R.getDependencias())+"\n";            
         }
-         triggerText(aImprimir);      
+        triggerText(aImprimir);      
     }
     
     public String getDependenciasToString(){
         
         String dep = "L={";      
-        for(Dependencias deps: _info.getDependencias() ){
+        for(Dependencias deps: getInfo().getDependencias() ){
             
             dep+=deps.getEtCante()+"->"+deps.getEtCado()+";";
         }
         dep+="}\nT={";
-        for(Atributo at : _info.getAtributos()){
+        for(Atributo at : getInfo().getAtributos()){
            dep+=at.getNombre()+"("+at.getEtiqueta()+");"; 
         }
         dep+="}";
@@ -203,6 +203,25 @@ public class Manejador {
         dep+="}";
         return dep;
         
+    }
+
+    /**
+     * @return the _info
+     */
+    public Info getInfo() {
+        return _info;
+    }
+
+    void calcular3FN() {
+        String aImprimir="2 Forma Normal \n";
+        Algoritmos alg = new Algoritmos(getInfo().getAtributos(), getInfo().getDependencias());
+        _relaciones.put("3FN", alg.Calcular3FN());
+        ListIterator li = _relaciones.get("3FN").listIterator();
+        while (li.hasNext()) {
+            Relacion R =(Relacion)li.next();
+            aImprimir += R.getNombreR() +"\n"+getDependenciasToString(R.getAtributos(),R.getDependencias())+"\n";            
+        }
+        triggerText(aImprimir);   
     }
             
     

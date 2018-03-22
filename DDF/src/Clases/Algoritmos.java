@@ -31,36 +31,35 @@ public class Algoritmos {
     ArrayList<Relacion> Calcular2FN(){
         
       _2FN = new ArrayList<>();
-       _2FN.add(_1FN);
-       Iterator<Relacion> iteradorR = _2FN.iterator();
-       while(iteradorR.hasNext()){
-           Relacion RT= iteradorR.next();
-           if(RT.getFormaNormal().equals("2FN"))continue;
-            for(int i =0; i<RT.getDependencias().size();i++){          
-            if(EsParcial(RT.getDependencias().get(i), RT.getLlave()))
-          {
-              ArrayList<Dependencias> dp = new ArrayList<>();
-              dp.add(RT.getDependencias().get(i));
-              Relacion rdp =new Relacion(dp);
-              CalcularClaveR(rdp);
-              rdp.setFormaNormal("2FN");
-              rdp.setNombreR( RT.getNombreR()+(i+1) );
-              _2FN.add(rdp);
-              ArrayList<Dependencias> dp2 = new ArrayList<>();
-              dp2.addAll(RT.getDependencias());
-              dp2.remove(i);
-              Relacion rdp2 =new Relacion(dp2);
-              CalcularClaveR(rdp2);
-              rdp2.setNombreR( RT.getNombreR()+(i+2) );
-              _2FN.add(rdp2);
-              _2FN.remove(RT);
-              iteradorR = _2FN.iterator();
-              break;
-          } 
-           RT.setFormaNormal("2FN");
-       }  
-           
-       }
+      _2FN.add(_1FN);
+      Iterator<Relacion> iteradorR = _2FN.iterator();
+      while(iteradorR.hasNext()){
+          Relacion RT= iteradorR.next();
+          if(RT.getFormaNormal().equals("2FN"))continue;
+          for(int i =0; i<RT.getDependencias().size();i++){                  
+              if(EsParcial(RT.getDependencias().get(i), RT.getLlave()))
+              {
+                  ArrayList<Dependencias> dp = new ArrayList<>();
+                  dp.add(RT.getDependencias().get(i));
+                  Relacion rdp =new Relacion(dp);
+                  CalcularClaveR(rdp);
+                  rdp.setFormaNormal("2FN");
+                  rdp.setNombreR( RT.getNombreR()+(i+1) );
+                  _2FN.add(rdp);
+                  ArrayList<Dependencias> dp2 = new ArrayList<>();
+                  dp2.addAll(RT.getDependencias());
+                  dp2.remove(i);
+                  Relacion rdp2 =new Relacion(dp2);
+                  CalcularClaveR(rdp2);
+                  rdp2.setNombreR( RT.getNombreR()+(i+2) );
+                  _2FN.add(rdp2);
+                  _2FN.remove(RT);
+                  iteradorR = _2FN.iterator();
+                  break;
+              } 
+              RT.setFormaNormal("2FN");
+          }  
+      }
       return new ArrayList<>(_2FN) ;
     }
     
@@ -114,6 +113,48 @@ public class Algoritmos {
       if(cont==searchChars.length && cont!= str.length())return true;
       else return false;
   }
+
+    ArrayList Calcular3FN() {
+
+        ArrayList<Relacion> _3FN = new ArrayList<>();
+        _3FN.add(_1FN);
+        Iterator<Relacion> iteradorR = _2FN.iterator();
+        while(iteradorR.hasNext()){
+            Relacion RT = iteradorR.next();
+            
+            // primero se evalua que la relación este en segunda formal
+            
+            if(RT.getFormaNormal().equals("2FN"))continue;
+            
+            // luego se debe validar que no contenga dependencias transitivas excepto por superclave
+            
+            for(int i =0; i<RT.getDependencias().size();i++){
+                if(EsParcial(RT.getDependencias().get(i), RT.getLlave()))
+                {
+                    
+                  ArrayList<Dependencias> dp = new ArrayList<>();
+                  dp.add(RT.getDependencias().get(i));
+                  Relacion rdp =new Relacion(dp);
+                  CalcularClaveR(rdp);
+                  rdp.setFormaNormal("2FN");
+                  rdp.setNombreR( RT.getNombreR()+(i+1) );
+                  _2FN.add(rdp);
+                  ArrayList<Dependencias> dp2 = new ArrayList<>();
+                  dp2.addAll(RT.getDependencias());
+                  dp2.remove(i);
+                  Relacion rdp2 =new Relacion(dp2);
+                  CalcularClaveR(rdp2);
+                  rdp2.setNombreR( RT.getNombreR()+(i+2) );
+                  _2FN.add(rdp2);
+                  _2FN.remove(RT);
+                  iteradorR = _2FN.iterator();
+                  break;
+              } 
+              RT.setFormaNormal("2FN");
+          }  
+      }
+      return new ArrayList<>(_2FN) ;
+    }
        
     
 }

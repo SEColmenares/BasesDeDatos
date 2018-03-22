@@ -68,6 +68,7 @@ public class interfaz extends javax.swing.JFrame {
         mb_app = new javax.swing.JMenu();
         mi_abrir = new javax.swing.JMenuItem();
         mi_guardar = new javax.swing.JMenuItem();
+        mi_exportar = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -154,6 +155,11 @@ public class interfaz extends javax.swing.JFrame {
         cb_algoritmo.setMaximumSize(new java.awt.Dimension(150, 24));
         cb_algoritmo.setMinimumSize(new java.awt.Dimension(150, 24));
         cb_algoritmo.setPreferredSize(new java.awt.Dimension(150, 24));
+        cb_algoritmo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cb_algoritmoActionPerformed(evt);
+            }
+        });
         tb_algoritmo.add(cb_algoritmo);
 
         bt_aplicar.setText("Aplicar");
@@ -190,6 +196,15 @@ public class interfaz extends javax.swing.JFrame {
             }
         });
         mb_app.add(mi_guardar);
+
+        mi_exportar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/SQL-.png"))); // NOI18N
+        mi_exportar.setText("Exportar SQL ....");
+        mi_exportar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mi_exportarActionPerformed(evt);
+            }
+        });
+        mb_app.add(mi_exportar);
 
         jMenuBar1.add(mb_app);
 
@@ -348,7 +363,7 @@ public class interfaz extends javax.swing.JFrame {
                 
             case "2 Forma Normal":_manejo.calcular2FN();
                      break;
-            case "3 Forma Normal":;
+            case "3 Forma Normal":_manejo.calcular3FN();
                      break;
             case "Forma Normal BC":;
                      break;
@@ -365,6 +380,19 @@ public class interfaz extends javax.swing.JFrame {
        JOptionPane.showMessageDialog(null, e);
      }
     }//GEN-LAST:event_bt_aplicarActionPerformed
+
+    private void mi_exportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mi_exportarActionPerformed
+        // para crear el script se crea una clase que se encarga de eso y se le pasa todo lo de info.
+            FileWriter fw = null;
+            StringBuilder contenidoScript = new StringBuilder(); 
+            CreadorScripts creador = new CreadorScripts(_manejo.getInfo());
+            contenidoScript = creador.CrearContenidoScripts();
+            creador.CrearScript(contenidoScript);           
+    }//GEN-LAST:event_mi_exportarActionPerformed
+
+    private void cb_algoritmoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_algoritmoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cb_algoritmoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -412,6 +440,7 @@ public class interfaz extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JMenu mb_app;
     private javax.swing.JMenuItem mi_abrir;
+    private javax.swing.JMenuItem mi_exportar;
     private javax.swing.JMenuItem mi_guardar;
     private javax.swing.JScrollPane sp_diseño;
     private javax.swing.JTextArea ta_panel;
